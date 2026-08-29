@@ -627,8 +627,11 @@ button {
 .product-card-image-wrapper {
   position: relative;
   aspect-ratio: 1 / 1;
-  background-color: var(--color-card-bg);
+  background-color: #ffffff;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .demo-card-illustration {
@@ -647,8 +650,11 @@ button {
 .product-card-image-wrapper img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  transition: opacity 0.4s ease, transform 0.5s ease;
+  object-fit: contain;
+  object-position: center;
+  padding: 10px;
+  background-color: #ffffff;
+  transition: opacity 0.4s ease, transform 0.4s ease;
 }
 
 .product-card:hover .product-card-image-primary {
@@ -1510,7 +1516,36 @@ button {
 
 @media (max-width: 640px) {
   .stats-grid { grid-template-columns: 1fr 1fr; }
-  .product-grid { grid-template-columns: 1fr; }
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .product-card-content {
+    padding: 12px 10px !important;
+  }
+  .product-card-vendor {
+    font-size: 0.65rem !important;
+    margin-bottom: 4px !important;
+  }
+  .product-card-title {
+    font-size: 0.88rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 6px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .price {
+    font-size: 0.95rem !important;
+  }
+  .compare-at-price {
+    font-size: 0.8rem !important;
+  }
+  .product-card .btn-pill-small {
+    padding: 8px 12px !important;
+    font-size: 0.75rem !important;
+  }
   .pdp-gallery { flex-direction: column-reverse; }
   .pdp-thumbnails { flex-direction: row; width: 100%; }
 }
