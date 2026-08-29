@@ -66,57 +66,72 @@
       {% endif %}
 
       <!-- Footer Menu 1 -->
-      <div>
-        <h4 class="footer-heading" style="color: {{ section.settings.heading_color | default: '#ffffff' }};">{{ section.settings.menu_1_title | default: 'Shop' }}</h4>
-        {% assign menu_1 = section.settings.menu_1 %}
-        {% if menu_1.links == blank %}{% assign menu_1 = linklists[section.settings.menu_1] %}{% endif %}
-        <ul class="footer-menu-list">
-          {% if menu_1.links != blank %}
-            {% for link in menu_1.links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="/collections/all">All Collections</a></li>
-            <li><a href="/collections">Featured Products</a></li>
-            <li><a href="/products">Best Sellers</a></li>
-          {% endif %}
-        </ul>
+      <div class="footer-col footer-col-menu">
+        <button type="button" class="footer-accordion-header" data-action="toggle-footer-menu" aria-label="Toggle Shop Menu">
+          <h4 class="footer-heading" style="color: {{ section.settings.heading_color | default: '#ffffff' }};">{{ section.settings.menu_1_title | default: 'Shop' }}</h4>
+          <span class="footer-accordion-icon">{% render 'icon-chevron' %}</span>
+        </button>
+        <div class="footer-menu-content">
+          {% assign menu_1 = section.settings.menu_1 %}
+          {% if menu_1.links == blank %}{% assign menu_1 = linklists[section.settings.menu_1] %}{% endif %}
+          <ul class="footer-menu-list">
+            {% if menu_1.links != blank %}
+              {% for link in menu_1.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/collections/all">All Collections</a></li>
+              <li><a href="/collections">Featured Products</a></li>
+              <li><a href="/products">Best Sellers</a></li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
       <!-- Footer Menu 2 -->
-      <div>
-        <h4 class="footer-heading" style="color: {{ section.settings.heading_color | default: '#ffffff' }};">{{ section.settings.menu_2_title | default: 'Help' }}</h4>
-        {% assign menu_2 = section.settings.menu_2 %}
-        {% if menu_2.links == blank %}{% assign menu_2 = linklists[section.settings.menu_2] %}{% endif %}
-        <ul class="footer-menu-list">
-          {% if menu_2.links != blank %}
-            {% for link in menu_2.links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="/pages/contact">Contact Us</a></li>
-            <li><a href="/pages/faq">Shipping & Delivery</a></li>
-            <li><a href="/pages/returns">Returns & Exchange</a></li>
-          {% endif %}
-        </ul>
+      <div class="footer-col footer-col-menu">
+        <button type="button" class="footer-accordion-header" data-action="toggle-footer-menu" aria-label="Toggle Help Menu">
+          <h4 class="footer-heading" style="color: {{ section.settings.heading_color | default: '#ffffff' }};">{{ section.settings.menu_2_title | default: 'Help' }}</h4>
+          <span class="footer-accordion-icon">{% render 'icon-chevron' %}</span>
+        </button>
+        <div class="footer-menu-content">
+          {% assign menu_2 = section.settings.menu_2 %}
+          {% if menu_2.links == blank %}{% assign menu_2 = linklists[section.settings.menu_2] %}{% endif %}
+          <ul class="footer-menu-list">
+            {% if menu_2.links != blank %}
+              {% for link in menu_2.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/pages/contact">Contact Us</a></li>
+              <li><a href="/pages/faq">Shipping & Delivery</a></li>
+              <li><a href="/pages/returns">Returns & Exchange</a></li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
       <!-- Footer Menu 3 -->
-      <div>
-        <h4 class="footer-heading" style="color: {{ section.settings.heading_color | default: '#ffffff' }};">{{ section.settings.menu_3_title | default: 'About' }}</h4>
-        {% assign menu_3 = section.settings.menu_3 %}
-        {% if menu_3.links == blank %}{% assign menu_3 = linklists[section.settings.menu_3] %}{% endif %}
-        <ul class="footer-menu-list">
-          {% if menu_3.links != blank %}
-            {% for link in menu_3.links %}
-              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
-            {% endfor %}
-          {% else %}
-            <li><a href="/pages/about">Our Brand Story</a></li>
-            <li><a href="/pages/quality">Quality Guarantee</a></li>
-            <li><a href="/pages/sustainability">Sustainability</a></li>
-          {% endif %}
-        </ul>
+      <div class="footer-col footer-col-menu">
+        <button type="button" class="footer-accordion-header" data-action="toggle-footer-menu" aria-label="Toggle About Menu">
+          <h4 class="footer-heading" style="color: {{ section.settings.heading_color | default: '#ffffff' }};">{{ section.settings.menu_3_title | default: 'About' }}</h4>
+          <span class="footer-accordion-icon">{% render 'icon-chevron' %}</span>
+        </button>
+        <div class="footer-menu-content">
+          {% assign menu_3 = section.settings.menu_3 %}
+          {% if menu_3.links == blank %}{% assign menu_3 = linklists[section.settings.menu_3] %}{% endif %}
+          <ul class="footer-menu-list">
+            {% if menu_3.links != blank %}
+              {% for link in menu_3.links %}
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+              {% endfor %}
+            {% else %}
+              <li><a href="/pages/about">Our Brand Story</a></li>
+              <li><a href="/pages/quality">Quality Guarantee</a></li>
+              <li><a href="/pages/sustainability">Sustainability</a></li>
+            {% endif %}
+          </ul>
+        </div>
       </div>
 
     </div>

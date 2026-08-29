@@ -1,26 +1,104 @@
-<div class="hero-section" style="{% if section.settings.image != blank %}background-image: url('{{ section.settings.image | image_url: width: 2000 }}');{% else %}background: linear-gradient(135deg, var(--color-card-bg) 0%, var(--color-secondary) 100%);{% endif %}">
-  <div class="hero-overlay"></div>
-  
-  <div class="page-width" style="width: 100%;">
-    <div class="hero-card">
+<div class="hero-section-v2" style="background-color: {{ section.settings.bg_color | default: '#f6f0e6' }}; color: {{ section.settings.text_color | default: '#1a1a1a' }};">
+  <!-- Subtle Palm Shadow SVG Overlay -->
+  <div class="hero-palm-shadow">
+    <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path opacity="0.04" d="M120 0C180 60 210 140 180 220C150 300 80 340 0 350C40 280 60 200 40 120C20 40 -40 10 -100 0C-40 0 40 0 120 0Z" fill="#000" />
+      <path opacity="0.03" d="M300 0C360 80 350 180 290 260C230 340 140 380 40 390C100 310 130 210 110 120C90 30 10 -10 -60 -20C20 -10 160 -10 300 0Z" fill="#000" />
+    </svg>
+  </div>
+
+  <div class="page-width">
+    <div class="hero-grid-v2">
       
-      {% if section.settings.show_rating %}
-        <div class="hero-subtitle">
-          <div class="star-rating">
-            {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+      <!-- Left Typography Column -->
+      <div class="hero-content-col">
+        
+        {% if section.settings.show_rating %}
+          <div class="hero-rating-badge">
+            <div class="star-rating">
+              {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+            </div>
+            <span class="rating-text">{{ section.settings.rating_text | default: 'Rated by Store Customers' }}</span>
           </div>
-          <span class="rating-text">{{ section.settings.rating_text }}</span>
-        </div>
-      {% endif %}
+        {% endif %}
 
-      <h1 class="hero-title">{{ section.settings.heading }}</h1>
-      <p class="hero-description">{{ section.settings.subheading }}</p>
+        <h1 class="hero-heading-v2">
+          {{ section.settings.heading | default: 'Discover Your New Favorites' }}
+          {% if section.settings.show_sparkles %}
+            <span class="hero-sparkle-icon" aria-hidden="true">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 0L14.59 9.41L24 12L14.59 14.59L12 24L9.41 14.59L0 12L9.41 9.41L12 0Z" fill="{{ section.settings.sparkle_color | default: '#b05d76' }}"/>
+                <path d="M19 15L20.2 19.8L25 21L20.2 22.2L19 27L17.8 22.2L13 21L17.8 19.8L19 15Z" fill="{{ section.settings.sparkle_color | default: '#b05d76' }}" opacity="0.75" transform="scale(0.5) translate(18, -10)"/>
+              </svg>
+            </span>
+          {% endif %}
+        </h1>
 
-      {% if section.settings.button_text != blank %}
-        <a href="{{ section.settings.button_link }}" class="btn btn-primary">
-          {{ section.settings.button_text }}
-        </a>
-      {% endif %}
+        {% if section.settings.subheading != blank %}
+          <p class="hero-description-v2">
+            {{ section.settings.subheading | newline_to_br }}
+          </p>
+        {% endif %}
+
+        {% if section.settings.button_text != blank %}
+          <div class="hero-btn-wrapper">
+            <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn hero-pill-btn">
+              {{ section.settings.button_text }}
+            </a>
+          </div>
+        {% endif %}
+
+      </div>
+
+      <!-- Right Visual Column -->
+      <div class="hero-visual-col">
+        {% if section.settings.image != blank %}
+          <div class="hero-image-wrapper">
+            <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.heading | escape }}" loading="eager" width="700" height="500">
+          </div>
+        {% else %}
+          <!-- Default Lifestyle Product Arrangement SVG Showcase -->
+          <div class="hero-demo-visual">
+            <svg viewBox="0 0 600 480" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-svg-illustration">
+              <!-- Background Arch Backdrop -->
+              <path d="M340 100C340 44.7715 384.772 0 440 0C495.228 0 540 44.7715 540 100V420H340V100Z" fill="#e8dacb" opacity="0.6"/>
+              
+              <!-- Ceramic Arch Display Stand -->
+              <ellipse cx="280" cy="410" rx="140" ry="24" fill="#e3d4c3"/>
+              <rect x="180" y="380" width="200" height="30" rx="15" fill="#ebe0d3"/>
+
+              <!-- Leather Handbag -->
+              <path d="M220 230C220 215 232 203 247 203H353C368 203 380 215 380 230V370H220V230Z" fill="#c3824c"/>
+              <path d="M220 240L300 290L380 240" stroke="#a66a36" stroke-width="4" stroke-linecap="round"/>
+              <path d="M270 203V160C270 145 282 133 297 133C312 133 324 145 324 160V203" stroke="#a66a36" stroke-width="8" stroke-linecap="round" fill="none"/>
+              <rect x="285" y="285" width="30" height="24" rx="4" fill="#e8c872"/>
+
+              <!-- Sneakers -->
+              <path d="M370 380C370 340 410 320 460 320C510 320 540 340 560 370C570 385 560 410 540 410H380C370 410 370 395 370 380Z" fill="#ffffff"/>
+              <path d="M370 400H565V415H370V400Z" fill="#e0d6c8"/>
+              <path d="M420 340L440 370M440 340L460 370" stroke="#d5c8b8" stroke-width="4" stroke-linecap="round"/>
+
+              <!-- Smartwatch -->
+              <rect x="235" y="310" width="36" height="46" rx="10" fill="#1b1c1e"/>
+              <rect x="240" y="315" width="26" height="36" rx="6" fill="#2d3035"/>
+              <rect x="247" y="270" width="12" height="40" rx="3" fill="#3a3d42"/>
+              <rect x="247" y="356" width="12" height="40" rx="3" fill="#3a3d42"/>
+
+              <!-- Sunglasses -->
+              <path d="M270 390C270 405 285 415 300 415C315 415 330 405 330 390H270Z" fill="#4d3b32" opacity="0.85"/>
+              <path d="M335 390C335 405 350 415 365 415C380 415 395 405 395 390H335Z" fill="#4d3b32" opacity="0.85"/>
+              <path d="M330 392H335" stroke="#7a5c4c" stroke-width="4"/>
+
+              <!-- Ceramic Vase & Plant Leaves -->
+              <path d="M420 240C420 220 435 200 450 200C465 200 480 220 480 240C480 280 495 320 495 360H405C405 320 420 280 420 240Z" fill="#f0e6da"/>
+              <path d="M450 200V80" stroke="#46663c" stroke-width="5" stroke-linecap="round"/>
+              <path d="M450 160C480 140 510 150 520 170C490 190 465 180 450 160Z" fill="#46663c"/>
+              <path d="M450 120C420 100 390 110 380 130C410 150 435 140 450 120Z" fill="#58804c"/>
+              <path d="M450 90C475 70 500 75 510 95C485 110 465 105 450 90Z" fill="#46663c"/>
+            </svg>
+          </div>
+        {% endif %}
+      </div>
 
     </div>
   </div>
@@ -33,12 +111,24 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Hero Background Image"
+      "label": "Side Showcase Image (Optional)"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#f6f0e6"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text Color",
+      "default": "#1a1a1a"
     },
     {
       "type": "checkbox",
       "id": "show_rating",
-      "label": "Show Rating Badge",
+      "label": "Show Rating Stars Badge",
       "default": true
     },
     {
@@ -51,13 +141,25 @@
       "type": "text",
       "id": "heading",
       "label": "Heading",
-      "default": "Store Headline Announcement"
+      "default": "Discover Your New Favorites"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_sparkles",
+      "label": "Show Sparkle Icons Beside Heading",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "sparkle_color",
+      "label": "Sparkle Icon Accent Color",
+      "default": "#b05d76"
     },
     {
       "type": "textarea",
       "id": "subheading",
       "label": "Subheading",
-      "default": "Add a descriptive message introducing your store's featured collection or products."
+      "default": "Quality products. Great prices.\nShop with confidence."
     },
     {
       "type": "text",

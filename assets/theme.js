@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStickyAddToCart();
   initHeaderSearch();
   initStickyAddToCartSubmit();
+  initFooterAccordions();
 });
 
 /* 1. Ajax Cart Drawer Handling */
@@ -461,6 +462,20 @@ function initStickyAddToCartSubmit() {
       }
     });
   }
+}
+
+/* 11. Mobile Footer Accordions */
+function initFooterAccordions() {
+  document.querySelectorAll('[data-action="toggle-footer-menu"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      if (window.innerWidth > 768) return;
+      e.preventDefault();
+      const col = btn.closest('.footer-col-menu');
+      if (col) {
+        col.classList.toggle('active');
+      }
+    });
+  });
 }
 
 /* Helpers */
