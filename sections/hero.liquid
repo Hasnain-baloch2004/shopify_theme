@@ -1,4 +1,10 @@
-<div class="hero-section-v2" style="background-color: {{ section.settings.bg_color | default: '#f6f0e6' }}; color: {{ section.settings.text_color | default: '#1a1a1a' }};">
+<div class="hero-section-v2 {% if section.settings.image != blank %}has-bg-image{% endif %}" style="{% if section.settings.image != blank %}background-image: url('{{ section.settings.image | image_url: width: 2200 }}');{% endif %} background-color: {{ section.settings.bg_color | default: '#f6f0e6' }}; color: {{ section.settings.text_color | default: '#1a1a1a' }};">
+  
+  <!-- Translucent Backdrop Overlay for Background Image Readability -->
+  {% if section.settings.image != blank %}
+    <div class="hero-bg-overlay" style="background: {{ section.settings.overlay_color | default: 'rgba(246, 240, 230, 0.82)' }};"></div>
+  {% endif %}
+
   <!-- Subtle Palm Shadow SVG Overlay -->
   <div class="hero-palm-shadow">
     <svg viewBox="0 0 500 500" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -7,10 +13,10 @@
     </svg>
   </div>
 
-  <div class="page-width">
-    <div class="hero-grid-v2">
+  <div class="page-width" style="position: relative; z-index: 3;">
+    <div class="hero-grid-v2 {% if section.settings.image != blank %}hero-grid-fullbg{% endif %}">
       
-      <!-- Left Typography Column -->
+      <!-- Typography Content Column -->
       <div class="hero-content-col">
         
         {% if section.settings.show_rating %}
@@ -50,46 +56,28 @@
 
       </div>
 
-      <!-- Right Visual Column -->
-      <div class="hero-visual-col">
-        {% if section.settings.image != blank %}
-          <div class="hero-image-wrapper">
-            <img src="{{ section.settings.image | image_url: width: 1400 }}" alt="{{ section.settings.heading | escape }}" loading="eager" width="700" height="500">
-          </div>
-        {% else %}
-          <!-- Default Lifestyle Product Arrangement SVG Showcase -->
+      <!-- Right Visual Column (Renders when no background image is assigned) -->
+      {% if section.settings.image == blank %}
+        <div class="hero-visual-col">
           <div class="hero-demo-visual">
             <svg viewBox="0 0 600 480" fill="none" xmlns="http://www.w3.org/2000/svg" class="hero-svg-illustration">
-              <!-- Background Arch Backdrop -->
               <path d="M340 100C340 44.7715 384.772 0 440 0C495.228 0 540 44.7715 540 100V420H340V100Z" fill="#e8dacb" opacity="0.6"/>
-              
-              <!-- Ceramic Arch Display Stand -->
               <ellipse cx="280" cy="410" rx="140" ry="24" fill="#e3d4c3"/>
               <rect x="180" y="380" width="200" height="30" rx="15" fill="#ebe0d3"/>
-
-              <!-- Leather Handbag -->
               <path d="M220 230C220 215 232 203 247 203H353C368 203 380 215 380 230V370H220V230Z" fill="#c3824c"/>
               <path d="M220 240L300 290L380 240" stroke="#a66a36" stroke-width="4" stroke-linecap="round"/>
               <path d="M270 203V160C270 145 282 133 297 133C312 133 324 145 324 160V203" stroke="#a66a36" stroke-width="8" stroke-linecap="round" fill="none"/>
               <rect x="285" y="285" width="30" height="24" rx="4" fill="#e8c872"/>
-
-              <!-- Sneakers -->
               <path d="M370 380C370 340 410 320 460 320C510 320 540 340 560 370C570 385 560 410 540 410H380C370 410 370 395 370 380Z" fill="#ffffff"/>
               <path d="M370 400H565V415H370V400Z" fill="#e0d6c8"/>
               <path d="M420 340L440 370M440 340L460 370" stroke="#d5c8b8" stroke-width="4" stroke-linecap="round"/>
-
-              <!-- Smartwatch -->
               <rect x="235" y="310" width="36" height="46" rx="10" fill="#1b1c1e"/>
               <rect x="240" y="315" width="26" height="36" rx="6" fill="#2d3035"/>
               <rect x="247" y="270" width="12" height="40" rx="3" fill="#3a3d42"/>
               <rect x="247" y="356" width="12" height="40" rx="3" fill="#3a3d42"/>
-
-              <!-- Sunglasses -->
               <path d="M270 390C270 405 285 415 300 415C315 415 330 405 330 390H270Z" fill="#4d3b32" opacity="0.85"/>
               <path d="M335 390C335 405 350 415 365 415C380 415 395 405 395 390H335Z" fill="#4d3b32" opacity="0.85"/>
               <path d="M330 392H335" stroke="#7a5c4c" stroke-width="4"/>
-
-              <!-- Ceramic Vase & Plant Leaves -->
               <path d="M420 240C420 220 435 200 450 200C465 200 480 220 480 240C480 280 495 320 495 360H405C405 320 420 280 420 240Z" fill="#f0e6da"/>
               <path d="M450 200V80" stroke="#46663c" stroke-width="5" stroke-linecap="round"/>
               <path d="M450 160C480 140 510 150 520 170C490 190 465 180 450 160Z" fill="#46663c"/>
@@ -97,8 +85,8 @@
               <path d="M450 90C475 70 500 75 510 95C485 110 465 105 450 90Z" fill="#46663c"/>
             </svg>
           </div>
-        {% endif %}
-      </div>
+        </div>
+      {% endif %}
 
     </div>
   </div>
@@ -111,12 +99,18 @@
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Side Showcase Image (Optional)"
+      "label": "Hero Background Image"
+    },
+    {
+      "type": "color_background",
+      "id": "overlay_color",
+      "label": "Background Image Overlay Color",
+      "default": "rgba(246, 240, 230, 0.82)"
     },
     {
       "type": "color",
       "id": "bg_color",
-      "label": "Background Color",
+      "label": "Background Color (Fallback)",
       "default": "#f6f0e6"
     },
     {

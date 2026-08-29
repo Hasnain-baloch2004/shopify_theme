@@ -346,12 +346,30 @@ button {
 }
 
 /* 6. Hero Section V2 (Reference Image Aesthetic) */
-.hero-section-v2 {
-  position: relative;
-  padding: 80px 0;
-  overflow: hidden;
-  display: flex;
+.hero-section-v2.has-bg-image {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  min-height: 520px;
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-grid-fullbg {
+  grid-template-columns: 1fr !important;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hero-grid-fullbg .hero-content-col {
   align-items: center;
+  text-align: center;
 }
 
 .hero-palm-shadow {
@@ -1352,6 +1370,35 @@ button {
 
   .hero-visual-col {
     width: 100%;
+  }
+
+  /* Header Mobile Logo & Layout Fixes */
+  .site-header .header-inner {
+    height: 60px;
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .header-logo-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .header-logo {
+    font-size: clamp(0.95rem, 4.2vw, 1.25rem) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+    line-height: 1.2;
+  }
+
+  .header-logo img {
+    max-height: 28px !important;
+    width: auto;
   }
 
   .hero-image-wrapper {
