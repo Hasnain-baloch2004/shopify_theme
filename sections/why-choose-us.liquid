@@ -1,23 +1,64 @@
-<div style="padding: 80px 0; background-color: var(--color-card-bg);">
+<div class="why-choose-us-section" style="background-color: {{ section.settings.bg_color | default: 'var(--color-card-bg)' }};">
   <div class="page-width">
-    <div class="text-center" style="margin-bottom: 48px;">
-      <h2>{{ section.settings.title }}</h2>
+    
+    <!-- Section Header -->
+    <div class="why-choose-us-header">
+      <h2 class="why-choose-us-title">{{ section.settings.title | default: "Why Customers Choose Us" }}</h2>
       {% if section.settings.subtitle != blank %}
-        <p style="color: var(--color-text-muted); max-width: 600px; margin: 0 auto;">{{ section.settings.subtitle }}</p>
+        <p class="why-choose-us-subtitle">{{ section.settings.subtitle }}</p>
       {% endif %}
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;">
+    <!-- Features Grid -->
+    <div class="why-choose-us-grid">
       {% for block in section.blocks %}
-        <div style="background-color: var(--color-bg); padding: 32px 24px; border-radius: var(--border-radius-card); border: 1px solid var(--color-border); text-align: center;" {{ block.shopify_attributes }}>
-          <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background-color: var(--color-secondary); color: var(--color-primary); margin-bottom: 20px;">
-            {% render 'icon-checkmark' %}
+        {% assign icon_style = block.settings.icon %}
+        {% if icon_style == blank %}
+          {% case forloop.index %}
+            {% when 1 %}{% assign icon_style = 'quality' %}
+            {% when 2 %}{% assign icon_style = 'shipping' %}
+            {% when 3 %}{% assign icon_style = 'guarantee' %}
+            {% when 4 %}{% assign icon_style = 'support' %}
+          {% endcase %}
+        {% endif %}
+
+        <div class="why-choose-us-card" {{ block.shopify_attributes }}>
+          <div class="why-choose-us-icon-wrapper">
+            {% case icon_style %}
+              {% when 'shipping' %}
+                <!-- Fast Express Shipping Truck Icon -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="3" width="15" height="13" rx="2"></rect>
+                  <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                  <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                  <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                </svg>
+              {% when 'guarantee' %}
+                <!-- 30-Day Guarantee / Badge Icon -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+              {% when 'support' %}
+                <!-- 24/7 Customer Support Headset Icon -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 18v-6a9 9 0 0 1 18 0v6"></path>
+                  <path d="M21 19a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3zM3 19a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2v-3a2 2 0 0 0-2-2H3z"></path>
+                </svg>
+              {% else %}
+                <!-- Quality Assured Shield Icon -->
+                <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <path d="m9 12 2 2 4-4"></path>
+                </svg>
+            {% endcase %}
           </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 10px;">{{ block.settings.title }}</h3>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.5;">{{ block.settings.text }}</p>
+          <h3 class="why-choose-us-card-title">{{ block.settings.title }}</h3>
+          <p class="why-choose-us-card-text">{{ block.settings.text }}</p>
         </div>
       {% endfor %}
     </div>
+
   </div>
 </div>
 
@@ -37,6 +78,12 @@
       "id": "subtitle",
       "label": "Subheading",
       "default": "We prioritize quality craftsmanship, exceptional customer experience, and hassle-free service."
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#faf7f2"
     }
   ],
   "blocks": [
@@ -45,16 +92,28 @@
       "name": "Feature Card",
       "settings": [
         {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon Style",
+          "options": [
+            { "value": "quality", "label": "Quality Shield / Check" },
+            { "value": "shipping", "label": "Fast Shipping Truck" },
+            { "value": "guarantee", "label": "Money Back Guarantee" },
+            { "value": "support", "label": "24/7 Support Headset" }
+          ],
+          "default": "quality"
+        },
+        {
           "type": "text",
           "id": "title",
           "label": "Feature Title",
-          "default": "Uncompromising Quality"
+          "default": "Quality Assured"
         },
         {
           "type": "textarea",
           "id": "text",
           "label": "Feature Description",
-          "default": "Every item in our collection undergoes rigorous quality control checks prior to shipment."
+          "default": "Designed with precision and built using durable materials meant to last."
         }
       ]
     }
@@ -63,10 +122,10 @@
     {
       "name": "Why Shop With Us",
       "blocks": [
-        { "type": "feature", "settings": { "title": "Quality Assured", "text": "Designed with precision and built using durable materials meant to last." } },
-        { "type": "feature", "settings": { "title": "Fast Express Shipping", "text": "Orders are processed swiftly with full real-time package tracking." } },
-        { "type": "feature", "settings": { "title": "30-Day Guarantee", "text": "Shop with complete confidence knowing you are backed by our hassle-free returns." } },
-        { "type": "feature", "settings": { "title": "Dedicated Support", "text": "Our customer care team is available to assist you with any questions." } }
+        { "type": "feature", "settings": { "icon": "quality", "title": "Quality Assured", "text": "Designed with precision and built using durable materials meant to last." } },
+        { "type": "feature", "settings": { "icon": "shipping", "title": "Fast Express Shipping", "text": "Orders are processed swiftly with full real-time package tracking." } },
+        { "type": "feature", "settings": { "icon": "guarantee", "title": "30-Day Guarantee", "text": "Shop with complete confidence knowing you are backed by hassle-free returns." } },
+        { "type": "feature", "settings": { "icon": "support", "title": "Dedicated Support", "text": "Our customer care team is available to assist you with any questions." } }
       ]
     }
   ]

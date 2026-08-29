@@ -510,6 +510,87 @@ button {
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--color-text-muted);
+/* Why Choose Us Section */
+.why-choose-us-section {
+  padding: 80px 0;
+  background-color: var(--color-card-bg);
+}
+
+.why-choose-us-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.why-choose-us-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  font-weight: 700;
+  color: var(--color-heading);
+  line-height: 1.2;
+}
+
+.why-choose-us-subtitle {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  max-width: 620px;
+  margin: 10px auto 0;
+  line-height: 1.5;
+}
+
+.why-choose-us-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.why-choose-us-card {
+  background-color: var(--color-bg);
+  padding: 32px 24px;
+  border-radius: var(--border-radius-card);
+  border: 1px solid var(--color-border);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+}
+
+.why-choose-us-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+  border-color: var(--color-border-dark);
+}
+
+.why-choose-us-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #f7eff2;
+  color: #b05d76;
+  margin-bottom: 20px;
+  transition: transform var(--transition-fast);
+}
+
+.why-choose-us-card:hover .why-choose-us-icon-wrapper {
+  transform: scale(1.08);
+}
+
+.why-choose-us-card-title {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--color-heading);
+  margin-bottom: 10px;
+}
+
+.why-choose-us-card-text {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
 }
 
 /* 8. Shop By Category */
@@ -1548,4 +1629,36 @@ button {
   }
   .pdp-gallery { flex-direction: column-reverse; }
   .pdp-thumbnails { flex-direction: row; width: 100%; }
+
+  /* Why Choose Us Mobile 2x2 Grid */
+  .why-choose-us-section {
+    padding: 48px 0 !important;
+  }
+  .why-choose-us-header {
+    margin-bottom: 28px !important;
+  }
+  .why-choose-us-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+  .why-choose-us-card {
+    padding: 20px 12px !important;
+  }
+  .why-choose-us-icon-wrapper {
+    width: 46px !important;
+    height: 46px !important;
+    margin-bottom: 12px !important;
+  }
+  .why-choose-us-icon-wrapper svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+  .why-choose-us-card-title {
+    font-size: 0.95rem !important;
+    margin-bottom: 6px !important;
+  }
+  .why-choose-us-card-text {
+    font-size: 0.8rem !important;
+    line-height: 1.4 !important;
+  }
 }
