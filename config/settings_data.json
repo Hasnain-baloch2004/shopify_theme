@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_primary": "#c86b85",
@@ -12,6 +21,52 @@
     "enable_cart_drawer": true,
     "free_shipping_threshold": 50,
     "free_shipping_text": "Add [amount] more to qualify for FREE Express Shipping!",
-    "free_shipping_unlocked_text": "Congratulations! You've unlocked FREE Express Shipping!"
+    "free_shipping_unlocked_text": "Congratulations! You've unlocked FREE Express Shipping!",
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "FREE EXPRESS SHIPPING ON ORDERS OVER $50 • 30-DAY GUARANTEE",
+          "link": "",
+          "bg_color": "#000000",
+          "text_color": "#ffffff"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "logo_max_height": 35,
+          "menu": "main-menu",
+          "highlight_first_menu_item": true
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "bg_color": "#c86b85",
+          "heading_color": "#ffffff",
+          "text_color": "#ffffff",
+          "show_newsletter": true,
+          "newsletter_title": "Join for 10% Off Your First Order",
+          "newsletter_text": "Subscribe to receive exclusive offers, new product arrivals, and insider updates.",
+          "show_social": true,
+          "menu_1_title": "Shop",
+          "menu_1": "footer",
+          "menu_2_title": "Help",
+          "menu_2": "",
+          "menu_3_title": "About",
+          "menu_3": "",
+          "show_watermark": true,
+          "watermark_text": "JovarkusSalesCo",
+          "copyright_text": "JovarkusSalesCo",
+          "show_payment_icons": true
+        }
+      }
+    },
+    "content_for_index": []
   }
 }
