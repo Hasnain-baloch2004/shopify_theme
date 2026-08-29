@@ -1,4 +1,4 @@
-<div style="padding: 80px 0; background-color: var(--color-card-bg);">
+<div class="why-choose-us-section" style="padding: 80px 0; background-color: var(--color-card-bg);">
   <div class="page-width">
     <div class="text-center" style="margin-bottom: 48px;">
       <h2>{{ section.settings.title }}</h2>
@@ -7,14 +7,14 @@
       {% endif %}
     </div>
 
-    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;">
+    <div class="why-choose-us-grid">
       {% for block in section.blocks %}
-        <div style="background-color: var(--color-bg); padding: 32px 24px; border-radius: var(--border-radius-card); border: 1px solid var(--color-border); text-align: center;" {{ block.shopify_attributes }}>
-          <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background-color: var(--color-secondary); color: var(--color-primary); margin-bottom: 20px;">
+        <div class="why-choose-us-card" style="background-color: var(--color-bg); padding: 32px 24px; border-radius: var(--border-radius-card); border: 1px solid var(--color-border); text-align: center;" {{ block.shopify_attributes }}>
+          <div class="why-choose-us-icon-wrapper" style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background-color: #f7eff2; color: #b05d76; margin-bottom: 20px;">
             {% render 'icon-checkmark' %}
           </div>
-          <h3 style="font-size: 1.15rem; margin-bottom: 10px;">{{ block.settings.title }}</h3>
-          <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.5;">{{ block.settings.text }}</p>
+          <h3 class="why-choose-us-card-title" style="font-size: 1.15rem; margin-bottom: 10px;">{{ block.settings.title }}</h3>
+          <p class="why-choose-us-card-text" style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.5;">{{ block.settings.text }}</p>
         </div>
       {% endfor %}
     </div>
