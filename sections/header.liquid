@@ -34,9 +34,9 @@
           {% endfor %}
         {% else %}
           <a href="{{ routes.root_url }}" class="nav-link nav-pill-btn">HOME PAGE</a>
-          <a href="/collections/beauty-products" class="nav-link">BEAUTY PRODUCTS</a>
-          <a href="/collections/food-products" class="nav-link">FOOD PRODUCTS</a>
-          <a href="/collections/fragrance-products" class="nav-link">FRAGRANCE PRODUCTS</a>
+          <a href="/collections/all" class="nav-link">BEAUTY PRODUCTS</a>
+          <a href="/collections/all" class="nav-link">FOOD PRODUCTS</a>
+          <a href="/collections/all" class="nav-link">FRAGRANCE PRODUCTS</a>
         {% endif %}
       </nav>
 
@@ -54,9 +54,7 @@
 
         <button class="icon-btn" data-action="open-cart" aria-label="Cart">
           {% render 'icon-cart' %}
-          <span class="cart-count-badge" style="{% if cart.item_count == 0 %}display:none;{% endif %}">
-            {{ cart.item_count }}
-          </span>
+          <span class="cart-count-badge" data-cart-count>{{ cart.item_count }}</span>
         </button>
       </div>
 
@@ -95,9 +93,9 @@
       {% endfor %}
     {% else %}
       <a href="{{ routes.root_url }}" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">HOME PAGE</a>
-      <a href="/collections/beauty-products" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">BEAUTY PRODUCTS</a>
-      <a href="/collections/food-products" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">FOOD PRODUCTS</a>
-      <a href="/collections/fragrance-products" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">FRAGRANCE PRODUCTS</a>
+      <a href="/collections/all" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">BEAUTY PRODUCTS</a>
+      <a href="/collections/all" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">FOOD PRODUCTS</a>
+      <a href="/collections/all" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">FRAGRANCE PRODUCTS</a>
     {% endif %}
   </nav>
 </div>
