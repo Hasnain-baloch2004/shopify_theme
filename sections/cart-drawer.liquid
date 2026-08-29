@@ -1,0 +1,57 @@
+<div class="cart-drawer-overlay"></div>
+
+<div class="cart-drawer">
+  <div class="cart-drawer-header">
+    <h3 style="font-size: 1.25rem;">{{ 'general.cart.title' | t }}</h3>
+    <button class="icon-btn" data-action="close-cart" aria-label="Close cart">
+      {% render 'icon-close' %}
+    </button>
+  </div>
+
+  <!-- Free Shipping Progress Goal -->
+  <div class="shipping-progress-container" data-free-shipping-threshold="{{ settings.free_shipping_threshold | default: 50 }}">
+    {% if settings.free_shipping_threshold > 0 %}
+      {% assign threshold_cents = settings.free_shipping_threshold | times: 100 %}
+      <div style="padding: 16px 24px; background-color: var(--color-secondary); border-bottom: 1px solid var(--color-border);" data-shipping-progress-box>
+        {% if cart.total_price >= threshold_cents %}
+          <div style="font-size: 0.85rem; font-weight: 700; color: var(--color-primary); text-align: center;" data-shipping-progress-text>
+            🎉 {{ settings.free_shipping_unlocked_text | default: "Congratulations! You've unlocked FREE Express Shipping!" }}
+          </div>
+        {% else %}
+          {% assign remaining = threshold_cents | minus: cart.total_price %}
+          <div style="font-size: 0.85rem; font-weight: 600; text-align: center; color: var(--color-heading);" data-shipping-progress-text>
+            Add <strong style="color: var(--color-primary);" data-shipping-remaining>{{ remaining | money }}</strong> more for FREE Express Shipping!
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="cart-drawer-body">
+    <!-- Rendered via theme.js fetchCart() -->
+  </div>
+
+  <div class="cart-drawer-footer">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+      <span style="font-weight: 600; color: var(--color-text-muted);">{{ 'general.cart.subtotal' | t }}</span>
+      <span style="font-weight: 700; font-size: 1.2rem;" data-cart-subtotal>{{ cart.total_price | money }}</span>
+    </div>
+
+    <p style="font-size: 0.8rem; color: var(--color-text-muted); margin-bottom: 16px;">
+      {{ 'general.cart.shipping_at_checkout' | t }}
+    </p>
+
+    <form action="{{ routes.cart_url }}" method="post">
+      <button type="submit" name="checkout" class="btn btn-primary btn-full" style="padding: 16px;">
+        {{ 'general.cart.checkout' | t }}
+      </button>
+    </form>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Drawer",
+  "settings": []
+}
+{% endschema %}

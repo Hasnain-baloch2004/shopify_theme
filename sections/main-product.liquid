@@ -1,0 +1,239 @@
+<div class="pdp-main-section" data-section-id="{{ section.id }}">
+  <div class="page-width">
+    
+    <!-- Breadcrumbs -->
+    <div style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 24px;">
+      <a href="{{ routes.root_url }}">Home</a> &nbsp;/&nbsp;
+      {% if collection %}
+        <a href="{{ collection.url }}">{{ collection.title }}</a> &nbsp;/&nbsp;
+      {% endif %}
+      <span>{{ product.title }}</span>
+    </div>
+
+    <div class="pdp-grid">
+      
+      <!-- Product Gallery -->
+      <div class="pdp-gallery">
+        {% if product.media.size > 1 %}
+          <div class="pdp-thumbnails">
+            {% for media in product.media %}
+              <button class="thumb-btn {% if forloop.first %}active{% endif %}" data-thumbnail data-full-src="{{ media | image_url: width: 1000 }}">
+                <img src="{{ media | image_url: width: 120 }}" alt="{{ media.alt | escape }}">
+              </button>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="pdp-main-image">
+          {% if product.featured_media %}
+            <img src="{{ product.featured_media | image_url: width: 1000 }}" alt="{{ product.title | escape }}" data-main-image>
+          {% else %}
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Product Info Buy Box -->
+      <div class="pdp-info pdp-buy-box">
+        
+        <div class="star-rating" style="margin-bottom: 12px;">
+          {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+          <span class="rating-text">Store Product Rating</span>
+        </div>
+
+        <h1 class="pdp-title">{{ product.title }}</h1>
+
+        <div style="margin-bottom: 20px;">
+          {% render 'price', product: product %}
+        </div>
+
+        <div style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 28px; line-height: 1.6;">
+          {{ product.description }}
+        </div>
+
+        {% form 'product', product, class: 'product-form', data-product-form: '', data-variants: product.variants | json | escape %}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-input>
+          
+          <!-- Multi-Option Variant Picker -->
+          {% unless product.has_only_default_variant %}
+            <div style="margin-bottom: 24px;">
+              {% for option in product.options_with_values %}
+                <div style="margin-bottom: 16px;">
+                  <label style="display: block; font-weight: 700; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
+                    {{ option.name }}: <span style="font-weight: 400;" data-option-value-display="{{ option.position }}">{{ option.selected_value }}</span>
+                  </label>
+                  <select class="product-option-select" data-option-index="{{ option.position }}" style="width: 100%; padding: 12px 16px; border-radius: var(--border-radius-sm); border: 1.5px solid var(--color-border); font-size: 0.95rem; background: var(--color-bg);">
+                    {% for value in option.values %}
+                      <option value="{{ value | escape }}" {% if option.selected_value == value %}selected{% endif %}>
+                        {{ value }}
+                      </option>
+                    {% endfor %}
+                  </select>
+                </div>
+              {% endfor %}
+            </div>
+          {% endunless %}
+
+          <!-- Quantity Stepper -->
+          <div style="margin-bottom: 24px;" data-quantity-wrapper>
+            <label style="display: block; font-weight: 700; font-size: 0.88rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px;">
+              Quantity
+            </label>
+            <div class="quantity-controls">
+              <button type="button" class="qty-btn" data-qty-minus>-</button>
+              <input type="number" name="quantity" value="1" min="1" class="qty-input">
+              <button type="button" class="qty-btn" data-qty-plus>+</button>
+            </div>
+          </div>
+
+          <!-- Quantity Bundle Card Selector -->
+          {% render 'bundle-selector', product: product %}
+
+          <!-- Urgency Progress Bar -->
+          {% if section.settings.show_urgency %}
+            <div class="urgency-bar-container">
+              <div class="urgency-text">{{ section.settings.urgency_text }}</div>
+              <div class="progress-bar-track">
+                <div class="progress-bar-fill" style="width: {{ section.settings.urgency_fill }}%;"></div>
+              </div>
+            </div>
+          {% endif %}
+
+          <!-- Add to Cart & Buy Buttons -->
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 24px;">
+            <button type="submit" name="add" class="btn btn-primary btn-full" style="padding: 18px; width: 100%; font-size: 1rem; font-weight: 700; cursor: pointer;" {% unless product.available %}disabled{% endunless %}>
+              {% if product.available %}
+                Add to Cart
+              {% else %}
+                Sold Out
+              {% endif %}
+            </button>
+
+            {% if section.settings.show_dynamic_checkout %}
+              {{ form | payment_button }}
+            {% endif %}
+          </div>
+
+        {% endform %}
+
+        <!-- Guarantee Badge -->
+        {% if section.settings.show_guarantee %}
+          <div class="guarantee-box">
+            {% render 'icon-guarantee' %}
+            <div>
+              <strong style="font-size: 0.9rem; display: block;">{{ section.settings.guarantee_title }}</strong>
+              <span style="font-size: 0.82rem; color: var(--color-text-muted);">{{ section.settings.guarantee_desc }}</span>
+            </div>
+          </div>
+        {% endif %}
+
+        <!-- PDP Accordions -->
+        <div class="accordion-group" style="margin-top: 36px;">
+          <div class="accordion-item active">
+            <button class="accordion-header">
+              <span>Product Specifications</span>
+              {% render 'icon-chevron' %}
+            </button>
+            <div class="accordion-content">
+              <p>Designed with premium components to ensure durability, sleek appearance, and long-term reliability under daily use.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span>Shipping & Delivery</span>
+              {% render 'icon-chevron' %}
+            </button>
+            <div class="accordion-content">
+              <p>All orders are processed within 1-2 business days. Express shipping takes 2-4 business days with full online tracking.</p>
+            </div>
+          </div>
+
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span>Returns & Warranty</span>
+              {% render 'icon-chevron' %}
+            </button>
+            <div class="accordion-content">
+              <p>Includes our 30-day money-back guarantee and 1-year manufacturer warranty against defects.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<!-- Sticky Bottom Add to Cart Bar -->
+<div class="sticky-add-to-cart-bar">
+  <div style="display: flex; align-items: center; gap: 16px;">
+    {% if product.featured_media %}
+      <img src="{{ product.featured_media | image_url: width: 80 }}" alt="{{ product.title | escape }}" style="width: 44px; height: 44px; object-fit: cover; border-radius: 6px;">
+    {% endif %}
+    <div>
+      <div style="font-weight: 700; font-size: 0.95rem;">{{ product.title }}</div>
+      <div style="font-size: 0.85rem; color: var(--color-primary); font-weight: 600;">{{ product.price | money }}</div>
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-primary btn-pill-small" data-action="sticky-add-to-cart">
+    Add to Cart
+  </button>
+</div>
+
+{% schema %}
+{
+  "name": "Product Main Page",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_urgency",
+      "label": "Show Urgency Bar",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency Bar Text",
+      "default": "Shipping & Availability Notice"
+    },
+    {
+      "type": "range",
+      "id": "urgency_fill",
+      "min": 10,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "label": "Progress Bar Fill",
+      "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dynamic_checkout",
+      "label": "Show Dynamic Payment Buttons",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee",
+      "label": "Show Guarantee Callout",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "guarantee_title",
+      "label": "Guarantee Title",
+      "default": "Store Return Policy"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_desc",
+      "label": "Guarantee Description",
+      "default": "Review our store return and refund guidelines prior to purchase."
+    }
+  ]
+}
+{% endschema %}

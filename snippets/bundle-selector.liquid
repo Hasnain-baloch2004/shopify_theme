@@ -1,0 +1,44 @@
+{% comment %}
+  Renders quantity pack options selector (1-Pack, 2-Pack, 3-Pack)
+  Sets cart quantity dynamically without fabricated discount claims
+{% endcomment %}
+
+<div class="bundle-selector-container">
+  <div class="bundle-card active" data-bundle-qty="1">
+    <div class="bundle-radio-label">
+      <input type="radio" name="bundle_option" id="bundle-1-{{ product.id }}" value="1" checked>
+      <label for="bundle-1-{{ product.id }}">Single Item (Qty: 1)</label>
+    </div>
+    <div class="bundle-prices">
+      <span class="bundle-total-price" style="font-weight: 700; font-size: 1.05rem;">{{ product.price | money }}</span>
+    </div>
+  </div>
+
+  <div class="bundle-card" data-bundle-qty="2">
+    <span class="bundle-card-badge">2-Pack</span>
+    <div class="bundle-radio-label">
+      <input type="radio" name="bundle_option" id="bundle-2-{{ product.id }}" value="2">
+      <label for="bundle-2-{{ product.id }}">Double Pack (Qty: 2)</label>
+    </div>
+    <div class="bundle-prices">
+      <span class="bundle-total-price" style="font-weight: 700; font-size: 1.05rem;">
+        {% assign double_price = product.price | times: 2 %}
+        {{ double_price | money }}
+      </span>
+    </div>
+  </div>
+
+  <div class="bundle-card" data-bundle-qty="3">
+    <span class="bundle-card-badge" style="background-color: var(--color-heading);">3-Pack</span>
+    <div class="bundle-radio-label">
+      <input type="radio" name="bundle_option" id="bundle-3-{{ product.id }}" value="3">
+      <label for="bundle-3-{{ product.id }}">Triple Pack (Qty: 3)</label>
+    </div>
+    <div class="bundle-prices">
+      <span class="bundle-total-price" style="font-weight: 700; font-size: 1.05rem;">
+        {% assign triple_price = product.price | times: 3 %}
+        {{ triple_price | money }}
+      </span>
+    </div>
+  </div>
+</div>

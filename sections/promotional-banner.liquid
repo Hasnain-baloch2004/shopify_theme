@@ -1,0 +1,65 @@
+<div style="padding: 60px 0; background-color: var(--color-card-bg);">
+  <div class="page-width">
+    <div style="background-color: var(--color-secondary); border-radius: var(--border-radius-card); padding: 56px 40px; text-align: center; border: 1px solid var(--color-border-dark);">
+      {% if section.settings.badge_text != blank %}
+        <span class="badge badge-pill badge-bestseller" style="margin-bottom: 16px;">{{ section.settings.badge_text }}</span>
+      {% endif %}
+
+      <h2 style="font-size: clamp(2rem, 3.5vw, 3rem); margin-bottom: 16px;">{{ section.settings.heading }}</h2>
+      
+      {% if section.settings.text != blank %}
+        <p style="max-width: 600px; margin: 0 auto 28px; color: var(--color-text-muted); font-size: 1.05rem;">
+          {{ section.settings.text }}
+        </p>
+      {% endif %}
+
+      {% if section.settings.button_text != blank %}
+        <a href="{{ section.settings.button_link }}" class="btn btn-primary">
+          {{ section.settings.button_text }}
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Promotional Callout Banner",
+  "settings": [
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Top Badge Text",
+      "default": "LIMITED TIME OFFER"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Upgrade Your Everyday Gear Today"
+    },
+    {
+      "type": "textarea",
+      "id": "text",
+      "label": "Subtext",
+      "default": "Enjoy exclusive seasonal savings across selected top-tier collections with free express delivery."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Text",
+      "default": "CLAIM OFFER NOW"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional Callout Banner"
+    }
+  ]
+}
+{% endschema %}

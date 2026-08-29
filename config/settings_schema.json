@@ -1,0 +1,145 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "Aura Premium",
+    "theme_author": "Antigravity Studio",
+    "theme_version": "1.0.0",
+    "theme_documentation_url": "https://shopify.com",
+    "theme_support_url": "https://shopify.com"
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_primary",
+        "label": "Primary Accent (Rose / Coral)",
+        "default": "#c86b85"
+      },
+      {
+        "type": "color",
+        "id": "color_primary_hover",
+        "label": "Primary Accent Hover",
+        "default": "#b25871"
+      },
+      {
+        "type": "color",
+        "id": "color_secondary",
+        "label": "Secondary Accent / Highlight",
+        "default": "#faecef"
+      },
+      {
+        "type": "color",
+        "id": "color_text",
+        "label": "Body Text Color",
+        "default": "#1a1a1a"
+      },
+      {
+        "type": "color",
+        "id": "color_heading",
+        "label": "Heading Color",
+        "default": "#0d0d0d"
+      },
+      {
+        "type": "color",
+        "id": "color_bg",
+        "label": "Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_card_bg",
+        "label": "Soft Warm Card Background",
+        "default": "#f9f6f0"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border / Divider Color",
+        "default": "#ebe5df"
+      },
+      {
+        "type": "color",
+        "id": "color_sale_badge",
+        "label": "Sale Badge Color",
+        "default": "#d9534f"
+      }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      {
+        "type": "font_picker",
+        "id": "font_heading",
+        "label": "Heading Font",
+        "default": "playfair_display_n4"
+      },
+      {
+        "type": "font_picker",
+        "id": "font_body",
+        "label": "Body Font",
+        "default": "inter_n4"
+      }
+    ]
+  },
+  {
+    "name": "Cart Drawer",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "enable_cart_drawer",
+        "label": "Enable Slide-out Cart Drawer",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "free_shipping_threshold",
+        "label": "Free Shipping Threshold ($)",
+        "default": 50
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_text",
+        "label": "Free Shipping Progress Message",
+        "default": "Add [amount] more to qualify for FREE Shipping!"
+      },
+      {
+        "type": "text",
+        "id": "free_shipping_unlocked_text",
+        "label": "Free Shipping Unlocked Message",
+        "default": "Congratulations! You've unlocked FREE Shipping!"
+      }
+    ]
+  },
+  {
+    "name": "Social Media Links",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_twitter",
+        "label": "X / Twitter URL"
+      },
+      {
+        "type": "url",
+        "id": "social_youtube",
+        "label": "YouTube URL"
+      },
+      {
+        "type": "url",
+        "id": "social_pinterest",
+        "label": "Pinterest URL"
+      }
+    ]
+  }
+]

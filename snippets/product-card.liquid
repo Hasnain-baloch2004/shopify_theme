@@ -1,0 +1,51 @@
+{% comment %}
+  Renders product card with secondary image hover, badges, price, and view options button
+  Accepts:
+  - product: {Object} Shopify Product object
+{% endcomment %}
+
+<div class="product-card">
+  <div class="product-card-image-wrapper">
+    <a href="{{ product.url }}">
+      {% if product.featured_media %}
+        <img src="{{ product.featured_media | image_url: width: 600 }}" alt="{{ product.featured_media.alt | escape }}" loading="lazy" class="product-card-image-primary">
+        {% if product.media[1] %}
+          <img src="{{ product.media[1] | image_url: width: 600 }}" alt="{{ product.media[1].alt | escape }}" loading="lazy" class="product-card-image-secondary">
+        {% endif %}
+      {% else %}
+        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+      {% endif %}
+    </a>
+
+    <div class="product-card-badges">
+      {% if product.compare_at_price > product.price %}
+        <span class="badge badge-sale">Sale</span>
+      {% endif %}
+      {% if product.tags contains 'bestseller' or product.tags contains 'best seller' %}
+        <span class="badge badge-bestseller">Bestseller</span>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="product-card-content">
+    {% if product.vendor != blank %}
+      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 4px;">{{ product.vendor }}</div>
+    {% endif %}
+
+    <h3 class="product-card-title">
+      <a href="{{ product.url }}">{{ product.title }}</a>
+    </h3>
+
+    <div class="product-card-price-row">
+      {% render 'price', product: product %}
+    </div>
+
+    <a href="{{ product.url }}" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">
+      {% if product.has_only_default_variant %}
+        Add to Cart
+      {% else %}
+        View Options
+      {% endif %}
+    </a>
+  </div>
+</div>

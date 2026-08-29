@@ -1,0 +1,66 @@
+<div class="stats-bar">
+  <div class="page-width">
+    <div class="stats-grid">
+      {% for block in section.blocks %}
+        <div class="stat-item" {{ block.shopify_attributes }}>
+          <div class="stat-value">{{ block.settings.value }}</div>
+          <div class="stat-label">{{ block.settings.label }}</div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Trust & Stats Bar",
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "stat",
+      "name": "Stat Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "value",
+          "label": "Metric / Value",
+          "default": "Free Shipping"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "Description Label",
+          "default": "On Orders Over $50"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust & Stats Bar",
+      "blocks": [
+        {
+          "type": "stat",
+          "settings": { "value": "Fast Delivery", "label": "Direct To Door" }
+        },
+        {
+          "type": "stat",
+          "settings": { "value": "Easy Returns", "label": "Customer Support" }
+        },
+        {
+          "type": "stat",
+          "settings": { "value": "Quality Products", "label": "Curated Collections" }
+        },
+        {
+          "type": "stat",
+          "settings": { "value": "Direct Assistance", "label": "Order Support" }
+        },
+        {
+          "type": "stat",
+          "settings": { "value": "Secure Checkout", "label": "Encrypted Payment" }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

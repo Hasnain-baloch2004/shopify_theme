@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-collection",
+      "settings": {
+        "products_per_page": 12
+      }
+    },
+    "why_choose_us": {
+      "type": "why-choose-us"
+    },
+    "promotional_banner": {
+      "type": "promotional-banner"
+    }
+  },
+  "order": [
+    "main",
+    "why_choose_us",
+    "promotional_banner"
+  ]
+}

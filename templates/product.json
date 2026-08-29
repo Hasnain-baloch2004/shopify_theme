@@ -1,0 +1,42 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-product",
+      "settings": {
+        "show_urgency": true,
+        "urgency_text": "In High Demand • Ships within 24 business hours",
+        "urgency_fill": 85,
+        "show_dynamic_checkout": true,
+        "show_guarantee": true
+      }
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {
+        "title": "Why Customers Choose Us",
+        "subtitle": "We prioritize quality craftsmanship, exceptional customer experience, and hassle-free service."
+      }
+    },
+    "faq": {
+      "type": "faq-accordions",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Find answers to common questions about orders, shipping, and returns."
+      }
+    },
+    "related_products": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "You May Also Like",
+        "subtitle": "Recommended items from our collection.",
+        "products_to_show": 4
+      }
+    }
+  },
+  "order": [
+    "main",
+    "why_choose_us",
+    "faq",
+    "related_products"
+  ]
+}

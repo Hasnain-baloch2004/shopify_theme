@@ -1,0 +1,113 @@
+<div style="padding: 80px 0; background-color: var(--color-bg);">
+  <div class="page-width">
+    <div class="pdp-grid">
+      
+      <!-- Left Contact Card -->
+      <div>
+        <h2 style="margin-bottom: 12px;">{{ section.settings.title }}</h2>
+        <p style="color: var(--color-text-muted); margin-bottom: 32px;">{{ section.settings.subtitle }}</p>
+
+        <div style="background-color: var(--color-secondary); padding: 32px; border-radius: var(--border-radius-card); border: 1px solid var(--color-border);">
+          <h3 style="font-size: 1.15rem; margin-bottom: 8px;">{{ section.settings.support_card_title }}</h3>
+          <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 20px;">{{ section.settings.support_card_text }}</p>
+          {% if section.settings.support_card_btn_text != blank %}
+            <a href="{{ section.settings.support_card_btn_link }}" class="btn btn-primary btn-pill-small">
+              {{ section.settings.support_card_btn_text }}
+            </a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- Right Accordions -->
+      <div>
+        <div class="accordion-group">
+          {% for block in section.blocks %}
+            <div class="accordion-item {% if forloop.first %}active{% endif %}" {{ block.shopify_attributes }}>
+              <button class="accordion-header">
+                <span>{{ block.settings.question }}</span>
+                {% render 'icon-chevron' %}
+              </button>
+              <div class="accordion-content">
+                <p>{{ block.settings.answer }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "FAQ Accordions",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Frequently Asked Questions"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Find answers to common questions about orders, shipping, and returns."
+    },
+    {
+      "type": "text",
+      "id": "support_card_title",
+      "label": "Support Box Title",
+      "default": "Need Additional Help?"
+    },
+    {
+      "type": "textarea",
+      "id": "support_card_text",
+      "label": "Support Box Text",
+      "default": "Our support team is available 24/7 to assist you with order inquiries and product questions."
+    },
+    {
+      "type": "text",
+      "id": "support_card_btn_text",
+      "label": "Support Button Label",
+      "default": "CONTACT SUPPORT"
+    },
+    {
+      "type": "url",
+      "id": "support_card_btn_link",
+      "label": "Support Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "FAQ Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "question",
+          "label": "Question",
+          "default": "What is your shipping policy?"
+        },
+        {
+          "type": "textarea",
+          "id": "answer",
+          "label": "Answer",
+          "default": "We process orders within 1-2 business days. Express shipping typically arrives in 3-5 business days."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "FAQ Accordions",
+      "blocks": [
+        { "type": "faq", "settings": { "question": "How long does delivery take?", "answer": "Standard shipping takes 3-7 business days, while express shipping arrives within 2-4 business days." } },
+        { "type": "faq", "settings": { "question": "What is your return policy?", "answer": "We offer a 30-day money-back guarantee on all unused items in original packaging." } },
+        { "type": "faq", "settings": { "question": "How can I track my order?", "answer": "Once shipped, you will receive an email with a live tracking number and link." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

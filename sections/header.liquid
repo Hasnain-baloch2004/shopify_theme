@@ -1,0 +1,138 @@
+<header class="site-header">
+  <div class="page-width">
+    <div class="header-inner">
+      
+      <!-- Mobile Menu Toggle -->
+      <button class="icon-btn mobile-menu-toggle" aria-label="Open mobile menu">
+        {% render 'icon-menu' %}
+      </button>
+
+      <!-- Store Logo -->
+      <div class="header-logo-wrapper">
+        <a href="{{ routes.root_url }}" class="header-logo">
+          {% if section.settings.logo != blank %}
+            <img src="{{ section.settings.logo | image_url: width: 300 }}" alt="{{ shop.name | default: 'JovarkusSalesCo' | escape }}" style="max-height: {{ section.settings.logo_max_height }}px; width: auto;">
+          {% else %}
+            <span>{{ shop.name | default: 'JovarkusSalesCo' }}</span>
+          {% endif %}
+        </a>
+      </div>
+
+      <!-- Main Navigation Menu -->
+      <nav class="header-nav" role="navigation">
+        {% assign main_menu = section.settings.menu %}
+        {% if main_menu.links == blank %}
+          {% assign main_menu = linklists[section.settings.menu] %}
+        {% endif %}
+        {% if main_menu.links != blank %}
+          {% for link in main_menu.links %}
+            {% if forloop.first and section.settings.highlight_first_menu_item %}
+              <a href="{{ link.url }}" class="nav-link nav-pill-btn">{{ link.title }}</a>
+            {% else %}
+              <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+            {% endif %}
+          {% endfor %}
+        {% else %}
+          <a href="{{ routes.root_url }}" class="nav-link nav-pill-btn">HOME PAGE</a>
+          <a href="/collections/beauty-products" class="nav-link">BEAUTY PRODUCTS</a>
+          <a href="/collections/food-products" class="nav-link">FOOD PRODUCTS</a>
+          <a href="/collections/fragrance-products" class="nav-link">FRAGRANCE PRODUCTS</a>
+        {% endif %}
+      </nav>
+
+      <!-- Header Right Icons -->
+      <div class="header-icons">
+        <button class="icon-btn" data-action="toggle-header-search" aria-label="Search">
+          {% render 'icon-search' %}
+        </button>
+
+        {% if shop.customer_accounts_enabled %}
+          <a href="{{ routes.account_url }}" class="icon-btn" aria-label="Account">
+            {% render 'icon-account' %}
+          </a>
+        {% endif %}
+
+        <button class="icon-btn" data-action="open-cart" aria-label="Cart">
+          {% render 'icon-cart' %}
+          <span class="cart-count-badge" style="{% if cart.item_count == 0 %}display:none;{% endif %}">
+            {{ cart.item_count }}
+          </span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Interactive Slide-down Search Bar -->
+  <div class="header-search-bar" id="HeaderSearchBar">
+    <div class="page-width">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="header-search-form">
+        <input type="search" name="q" placeholder="Search Beauty, Food & Fragrance products..." class="header-search-input" autocomplete="off">
+        <button type="submit" class="btn btn-primary btn-pill-small">Search</button>
+        <button type="button" class="icon-btn" data-action="close-header-search" aria-label="Close search">
+          {% render 'icon-close' %}
+        </button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-nav-overlay" data-action="close-mobile-nav"></div>
+<div class="mobile-nav-drawer">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--color-border);">
+    <span class="header-logo">{{ shop.name | default: 'JovarkusSalesCo' }}</span>
+    <button class="icon-btn" data-action="close-mobile-nav" aria-label="Close menu">
+      {% render 'icon-close' %}
+    </button>
+  </div>
+  <nav style="display: flex; flex-direction: column; gap: 20px;">
+    {% if main_menu.links != blank %}
+      {% for link in main_menu.links %}
+        <a href="{{ link.url }}" style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 600; text-decoration: none; color: var(--color-heading);">
+          {{ link.title }}
+        </a>
+      {% endfor %}
+    {% else %}
+      <a href="{{ routes.root_url }}" style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 600; text-decoration: none; color: var(--color-heading);">HOME PAGE</a>
+      <a href="/collections/all" style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 600; text-decoration: none; color: var(--color-heading);">ALL PRODUCTS</a>
+      <a href="/collections" style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 600; text-decoration: none; color: var(--color-heading);">COLLECTIONS</a>
+      <a href="/pages/contact" style="font-family: var(--font-heading); font-size: 1.35rem; font-weight: 600; text-decoration: none; color: var(--color-heading);">CONTACT US</a>
+    {% endif %}
+  </nav>
+</div>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo Image"
+    },
+    {
+      "type": "range",
+      "id": "logo_max_height",
+      "min": 20,
+      "max": 100,
+      "step": 5,
+      "unit": "px",
+      "label": "Logo Max Height",
+      "default": 35
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation Menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "highlight_first_menu_item",
+      "label": "Highlight First Link as Pill Button",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

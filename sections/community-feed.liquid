@@ -1,0 +1,81 @@
+<div style="padding: 80px 0; background-color: var(--color-card-bg);">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="text-center" style="margin-bottom: 40px;">
+        <h2>{{ section.settings.title }}</h2>
+        {% if section.settings.subtitle != blank %}
+          <p style="color: var(--color-text-muted);">{{ section.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+      {% for block in section.blocks %}
+        <div style="border-radius: var(--border-radius-card); overflow: hidden; aspect-ratio: 1; background-color: var(--color-bg); position: relative; group: hover;" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Community" style="width: 100%; height: 100%; object-fit: cover;">
+          {% else %}
+            {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+
+          {% if block.settings.handle != blank %}
+            <div style="position: absolute; bottom: 12px; left: 12px; background: rgba(0,0,0,0.65); color: #fff; padding: 4px 12px; border-radius: var(--border-radius-pill); font-size: 0.75rem; font-weight: 600;">
+              {{ block.settings.handle }}
+            </div>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Social Community Feed",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Join Our Community"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Tag your posts to be featured in our community showcase."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "media",
+      "name": "Social Post Card",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Photo / Image"
+        },
+        {
+          "type": "text",
+          "id": "handle",
+          "label": "Social Handle / Tag",
+          "default": "@ourstore"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Social Community Feed",
+      "blocks": [
+        { "type": "media" },
+        { "type": "media" },
+        { "type": "media" },
+        { "type": "media" }
+      ]
+    }
+  ]
+}
+{% endschema %}

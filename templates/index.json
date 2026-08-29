@@ -1,0 +1,206 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "show_rating": true,
+        "rating_text": "Rated 4.9/5 by JovarkusSalesCo Customers",
+        "heading": "Premium Beauty, Food & Fragrance Essentials.",
+        "subheading": "Discover curated products engineered for elegance, taste, and enduring satisfaction at JovarkusSalesCo.",
+        "button_text": "EXPLORE COLLECTIONS",
+        "button_link": "/collections/all"
+      }
+    },
+    "stats_bar": {
+      "type": "stats-bar",
+      "blocks": {
+        "stat_1": {
+          "type": "stat",
+          "settings": {
+            "value": "Free Shipping",
+            "label": "On Orders Over $50"
+          }
+        },
+        "stat_2": {
+          "type": "stat",
+          "settings": {
+            "value": "30-Day Money Back",
+            "label": "Hassle-Free Guarantee"
+          }
+        },
+        "stat_3": {
+          "type": "stat",
+          "settings": {
+            "value": "Premium Quality",
+            "label": "Rigorously Tested"
+          }
+        },
+        "stat_4": {
+          "type": "stat",
+          "settings": {
+            "value": "Dedicated Support",
+            "label": "24/7 Assistance"
+          }
+        },
+        "stat_5": {
+          "type": "stat",
+          "settings": {
+            "value": "Secure Checkout",
+            "label": "256-Bit SSL Encrypted"
+          }
+        }
+      },
+      "block_order": ["stat_1", "stat_2", "stat_3", "stat_4", "stat_5"]
+    },
+    "shop_by_category": {
+      "type": "shop-by-category",
+      "settings": {
+        "title": "Shop By Category",
+        "subtitle": "Explore our premium selection of Beauty, Food, and Fragrance products."
+      },
+      "blocks": {
+        "cat_1": { "type": "category", "settings": { "title": "Beauty Products" } },
+        "cat_2": { "type": "category", "settings": { "title": "Food Products" } },
+        "cat_3": { "type": "category", "settings": { "title": "Fragrance Products" } }
+      },
+      "block_order": ["cat_1", "cat_2", "cat_3"]
+    },
+    "featured_collection": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Shop Best Sellers",
+        "subtitle": "Explore our most popular and highly rated products.",
+        "products_to_show": 4
+      }
+    },
+    "featured_product_embedded": {
+      "type": "featured-product-embedded",
+      "settings": {
+        "section_title": "Spotlight Product",
+        "rating_label": "Store Product Rating",
+        "show_urgency_bar": false,
+        "urgency_text": "Shipping & Availability Notice",
+        "urgency_progress": 85,
+        "show_guarantee": true
+      }
+    },
+    "product_benefits": {
+      "type": "product-benefits",
+      "settings": {
+        "title": "Engineered For Better Living",
+        "subtitle": "Thoughtfully crafted details designed to improve durability, usability, and style.",
+        "cta_button_text": "EXPLORE ALL PRODUCTS",
+        "cta_button_link": "/collections/all"
+      },
+      "blocks": {
+        "b1": {
+          "type": "benefit",
+          "settings": {
+            "title": "Premium Grade Craftsmanship",
+            "content": "Sourced from high-grade materials to ensure maximum durability, long lifespan, and exceptional performance."
+          }
+        },
+        "b2": {
+          "type": "benefit",
+          "settings": {
+            "title": "Ergonomic & Intuitive",
+            "content": "Designed with precision ergonomics for effortless everyday handling and user comfort."
+          }
+        },
+        "b3": {
+          "type": "benefit",
+          "settings": {
+            "title": "Sleek Modern Aesthetic",
+            "content": "Clean minimalist aesthetics that blend seamlessly into any environment."
+          }
+        }
+      },
+      "block_order": ["b1", "b2", "b3"]
+    },
+    "why_choose_us": {
+      "type": "why-choose-us",
+      "settings": {
+        "title": "Why Customers Choose Us",
+        "subtitle": "We prioritize quality craftsmanship, exceptional customer experience, and hassle-free service."
+      },
+      "blocks": {
+        "w1": { "type": "feature", "settings": { "title": "Quality Assured", "text": "Designed with precision and built using durable materials meant to last." } },
+        "w2": { "type": "feature", "settings": { "title": "Fast Express Shipping", "text": "Orders are processed swiftly with full real-time package tracking." } },
+        "w3": { "type": "feature", "settings": { "title": "30-Day Guarantee", "text": "Shop with complete confidence knowing you are backed by our hassle-free returns." } },
+        "w4": { "type": "feature", "settings": { "title": "Dedicated Support", "text": "Our customer care team is available to assist you with any questions." } }
+      },
+      "block_order": ["w1", "w2", "w3", "w4"]
+    },
+    "promotional_banner": {
+      "type": "promotional-banner",
+      "settings": {
+        "badge_text": "LIMITED TIME OFFER",
+        "heading": "Upgrade Your Everyday Gear Today",
+        "text": "Enjoy exclusive seasonal savings across selected top-tier collections with free express delivery.",
+        "button_text": "CLAIM OFFER NOW",
+        "button_link": "/collections/all"
+      }
+    },
+    "customer_reviews": {
+      "type": "customer-reviews",
+      "settings": {
+        "title": "Customer Feedback",
+        "subtitle": "Read real experiences from verified store customers."
+      }
+    },
+    "faq_accordions": {
+      "type": "faq-accordions",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Find answers to common questions about orders, shipping, and returns."
+      },
+      "blocks": {
+        "f1": { "type": "faq", "settings": { "question": "How long does delivery take?", "answer": "Standard shipping takes 3-7 business days, while express shipping arrives within 2-4 business days." } },
+        "f2": { "type": "faq", "settings": { "question": "What is your return policy?", "answer": "We offer a 30-day money-back guarantee on all unused items in original packaging." } },
+        "f3": { "type": "faq", "settings": { "question": "How can I track my order?", "answer": "Once shipped, you will receive an email with a live tracking number and link." } }
+      },
+      "block_order": ["f1", "f2", "f3"]
+    },
+    "community_feed": {
+      "type": "community-feed",
+      "settings": {
+        "title": "Join Our Community",
+        "subtitle": "Tag your posts to be featured in our community showcase."
+      },
+      "blocks": {
+        "c1": { "type": "media", "settings": { "handle": "@ourstore" } },
+        "c2": { "type": "media", "settings": { "handle": "@ourstore" } },
+        "c3": { "type": "media", "settings": { "handle": "@ourstore" } },
+        "c4": { "type": "media", "settings": { "handle": "@ourstore" } }
+      },
+      "block_order": ["c1", "c2", "c3", "c4"]
+    },
+    "press_logos": {
+      "type": "press-logos",
+      "settings": {
+        "heading": "AS FEATURED IN"
+      },
+      "blocks": {
+        "p1": { "type": "press_logo", "settings": { "press_title": "VOGUE" } },
+        "p2": { "type": "press_logo", "settings": { "press_title": "ELLE" } },
+        "p3": { "type": "press_logo", "settings": { "press_title": "GQ" } },
+        "p4": { "type": "press_logo", "settings": { "press_title": "FORBES" } }
+      },
+      "block_order": ["p1", "p2", "p3", "p4"]
+    }
+  },
+  "order": [
+    "hero",
+    "stats_bar",
+    "shop_by_category",
+    "featured_collection",
+    "featured_product_embedded",
+    "product_benefits",
+    "why_choose_us",
+    "promotional_banner",
+    "customer_reviews",
+    "faq_accordions",
+    "community_feed",
+    "press_logos"
+  ]
+}

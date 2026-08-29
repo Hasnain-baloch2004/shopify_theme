@@ -1,0 +1,74 @@
+<div style="padding: 80px 0; background-color: var(--color-card-bg);">
+  <div class="page-width">
+    <div class="text-center" style="margin-bottom: 48px;">
+      <h2>{{ section.settings.title }}</h2>
+      {% if section.settings.subtitle != blank %}
+        <p style="color: var(--color-text-muted); max-width: 600px; margin: 0 auto;">{{ section.settings.subtitle }}</p>
+      {% endif %}
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px;">
+      {% for block in section.blocks %}
+        <div style="background-color: var(--color-bg); padding: 32px 24px; border-radius: var(--border-radius-card); border: 1px solid var(--color-border); text-align: center;" {{ block.shopify_attributes }}>
+          <div style="display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; background-color: var(--color-secondary); color: var(--color-primary); margin-bottom: 20px;">
+            {% render 'icon-checkmark' %}
+          </div>
+          <h3 style="font-size: 1.15rem; margin-bottom: 10px;">{{ block.settings.title }}</h3>
+          <p style="font-size: 0.9rem; color: var(--color-text-muted); line-height: 1.5;">{{ block.settings.text }}</p>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Why Shop With Us",
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Why Customers Choose Us"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "We prioritize quality craftsmanship, exceptional customer experience, and hassle-free service."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature Card",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Feature Title",
+          "default": "Uncompromising Quality"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Feature Description",
+          "default": "Every item in our collection undergoes rigorous quality control checks prior to shipment."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Why Shop With Us",
+      "blocks": [
+        { "type": "feature", "settings": { "title": "Quality Assured", "text": "Designed with precision and built using durable materials meant to last." } },
+        { "type": "feature", "settings": { "title": "Fast Express Shipping", "text": "Orders are processed swiftly with full real-time package tracking." } },
+        { "type": "feature", "settings": { "title": "30-Day Guarantee", "text": "Shop with complete confidence knowing you are backed by our hassle-free returns." } },
+        { "type": "feature", "settings": { "title": "Dedicated Support", "text": "Our customer care team is available to assist you with any questions." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

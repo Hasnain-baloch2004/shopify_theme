@@ -1,0 +1,17 @@
+{% comment %}
+  Renders product price formatting with compare at price & sale indicator
+{% endcomment %}
+
+<div class="price-container" style="display: inline-flex; align-items: center; gap: 8px;">
+  {% if product.price_varies %}
+    <span class="price">From {{ product.price_min | money }}</span>
+  {% else %}
+    <span class="price">{{ product.price | money }}</span>
+  {% endif %}
+
+  {% if product.compare_at_price > product.price %}
+    <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
+    {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
+    <span style="font-size: 0.78rem; font-weight: 700; color: var(--color-primary);">Save {{ discount }}%</span>
+  {% endif %}
+</div>

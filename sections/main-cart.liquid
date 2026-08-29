@@ -1,0 +1,79 @@
+<div style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background-color: var(--color-bg);">
+  <div class="page-width">
+    
+    <h1 style="margin-bottom: 40px; text-align: center;">{{ 'general.cart.title' | t }}</h1>
+
+    {% if cart.item_count > 0 %}
+      <form action="{{ routes.cart_url }}" method="post" id="cart-form">
+        <div style="display: flex; flex-direction: column; gap: 24px; margin-bottom: 40px;">
+          {% for item in cart.items %}
+            <div style="display: grid; grid-template-columns: 80px 1fr auto; gap: 20px; align-items: center; border-bottom: 1px solid var(--color-border); padding-bottom: 20px;">
+              <img src="{{ item.image | image_url: width: 160 }}" alt="{{ item.title | escape }}" style="width: 80px; height: 80px; object-fit: cover; border-radius: 8px;">
+              
+              <div>
+                <h3 style="font-size: 1.1rem; font-family: var(--font-body); margin-bottom: 4px;">{{ item.product.title }}</h3>
+                {% unless item.has_only_default_variant %}
+                  <p style="font-size: 0.85rem; color: var(--color-text-muted);">{{ item.variant.title }}</p>
+                {% endunless %}
+                <a href="{{ item.url_to_remove }}" style="font-size: 0.8rem; color: var(--color-primary); text-decoration: underline; margin-top: 6px; display: inline-block;">Remove</a>
+              </div>
+
+              <div style="text-align: right;">
+                <div style="font-weight: 700; font-size: 1.1rem; margin-bottom: 8px;">{{ item.line_price | money }}</div>
+                <input type="number" name="updates[]" id="updates_{{ item.key }}" value="{{ item.quantity }}" min="0" style="width: 60px; padding: 6px; text-align: center; border: 1px solid var(--color-border); border-radius: 4px;">
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        <div style="max-width: 400px; margin-left: auto; background-color: var(--color-card-bg); padding: 32px; border-radius: var(--border-radius-card); border: 1px solid var(--color-border);">
+          <div style="display: flex; justify-content: space-between; font-weight: 700; font-size: 1.2rem; margin-bottom: 12px;">
+            <span>{{ 'general.cart.subtotal' | t }}</span>
+            <span>{{ cart.total_price | money }}</span>
+          </div>
+          <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 24px;">{{ 'general.cart.shipping_at_checkout' | t }}</p>
+
+          <button type="submit" name="checkout" class="btn btn-primary btn-full">
+            {{ 'general.cart.checkout' | t }}
+          </button>
+        </div>
+      </form>
+    {% else %}
+      <div class="text-center" style="padding: 80px 0;">
+        <p style="font-size: 1.15rem; color: var(--color-text-muted); margin-bottom: 24px;">{{ 'general.cart.empty' | t }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary">
+          {{ 'general.cart.continue_shopping' | t }}
+        </a>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Cart Page",
+  "settings": [
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 80
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 20,
+      "max": 120,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 80
+    }
+  ]
+}
+{% endschema %}

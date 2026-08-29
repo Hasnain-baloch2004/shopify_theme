@@ -1,0 +1,49 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Search products...",
+      "submit": "Search",
+      "no_results": "No products found."
+    },
+    "cart": {
+      "title": "Your Cart",
+      "empty": "Your cart is currently empty",
+      "continue_shopping": "Continue Shopping",
+      "checkout": "Proceed to Checkout",
+      "subtotal": "Subtotal",
+      "shipping_at_checkout": "Taxes and shipping calculated at checkout",
+      "view_cart": "View Cart",
+      "add_to_cart": "Add to Cart",
+      "adding": "Adding...",
+      "added": "Added to Cart!",
+      "sold_out": "Sold Out",
+      "unavailable": "Unavailable"
+    },
+    "product": {
+      "add_to_cart": "Add to Cart",
+      "sold_out": "Sold Out",
+      "buy_now": "Buy It Now",
+      "regular_price": "Regular price",
+      "sale_price": "Sale price",
+      "unit_price": "Unit price",
+      "quantity": "Quantity",
+      "view_options": "View Options",
+      "sale": "Sale",
+      "best_seller": "Bestseller",
+      "in_stock": "In Stock",
+      "out_of_stock": "Out of Stock"
+    },
+    "accessibility": {
+      "close": "Close",
+      "open_menu": "Open navigation menu",
+      "close_menu": "Close navigation menu"
+    }
+  },
+  "templates": {
+    "404": {
+      "title": "Page Not Found",
+      "subtext": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+      "button_label": "Back to Home"
+    }
+  }
+}

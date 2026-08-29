@@ -1,0 +1,83 @@
+<div class="text-center" style="padding-top: {{ section.settings.padding_top }}px; padding-bottom: {{ section.settings.padding_bottom }}px; background-color: var(--color-bg);">
+  {% if section.settings.code_text != blank %}
+    <h1 style="font-size: 5rem; font-family: var(--font-heading); color: var(--color-primary); line-height: 1; margin-bottom: 16px;">
+      {{ section.settings.code_text }}
+    </h1>
+  {% endif %}
+  
+  <h2 style="margin-bottom: 16px;">
+    {{ section.settings.title | default: 'templates.404.title' | t }}
+  </h2>
+
+  <p style="color: var(--color-text-muted); max-width: 480px; margin: 0 auto 32px;">
+    {{ section.settings.subtext | default: 'templates.404.subtext' | t }}
+  </p>
+
+  {% assign btn_label = section.settings.button_label | default: 'templates.404.button_label' | t %}
+  {% if btn_label != blank %}
+    <a href="{{ section.settings.button_link | default: routes.root_url }}" class="btn btn-primary">
+      {{ btn_label }}
+    </a>
+  {% endif %}
+</div>
+
+{% schema %}
+{
+  "name": "404 Page",
+  "settings": [
+    {
+      "type": "text",
+      "id": "code_text",
+      "label": "Error Code Display",
+      "default": "404"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Page Not Found"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext / Description",
+      "default": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Back to Home"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button Link"
+    },
+    {
+      "type": "header",
+      "content": "Section Padding"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 40,
+      "max": 160,
+      "step": 10,
+      "unit": "px",
+      "label": "Top Padding",
+      "default": 120
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 40,
+      "max": 160,
+      "step": 10,
+      "unit": "px",
+      "label": "Bottom Padding",
+      "default": 120
+    }
+  ]
+}
+{% endschema %}

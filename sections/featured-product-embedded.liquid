@@ -1,0 +1,200 @@
+{% assign product = section.settings.product %}
+{% if product.title == blank %}{% assign product = all_products[section.settings.product] %}{% endif %}
+
+<div class="featured-product-section" style="background-color: var(--color-card-bg);">
+  <div class="page-width">
+    {% if section.settings.section_title != blank %}
+      <div class="text-center" style="margin-bottom: 40px;">
+        <h2>{{ section.settings.section_title }}</h2>
+      </div>
+    {% endif %}
+
+    {% if product != blank %}
+      <div class="pdp-grid">
+        <!-- Media Gallery -->
+        <div class="pdp-gallery">
+          <div class="pdp-thumbnails">
+            {% for media in product.media limit: 4 %}
+              <button class="thumb-btn {% if forloop.first %}active{% endif %}" data-thumbnail data-full-src="{{ media | image_url: width: 800 }}">
+                <img src="{{ media | image_url: width: 120 }}" alt="{{ media.alt | escape }}">
+              </button>
+            {% endfor %}
+          </div>
+
+          <div class="pdp-main-image">
+            {% if product.featured_media %}
+              <img src="{{ product.featured_media | image_url: width: 800 }}" alt="{{ product.title | escape }}" data-main-image>
+            {% else %}
+              {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+            {% endif %}
+          </div>
+        </div>
+
+        <!-- Product Buy Info -->
+        <div class="pdp-info pdp-buy-box">
+          <div class="star-rating" style="margin-bottom: 10px;">
+            {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+            <span class="rating-text">{{ section.settings.rating_label }}</span>
+          </div>
+
+          <h2 class="pdp-title">{{ product.title }}</h2>
+
+          <div style="margin-bottom: 16px;">
+            {% render 'price', product: product %}
+          </div>
+
+          <div style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 24px;">
+            {{ product.description | truncatewords: 30 }}
+          </div>
+
+          {% form 'product', product, class: 'product-form', data-product-form: '', data-variants: product.variants | json | escape %}
+            <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" data-variant-input>
+            <input type="hidden" name="quantity" value="1">
+
+            {% render 'bundle-selector', product: product %}
+
+            {% if section.settings.show_urgency_bar %}
+              <div class="urgency-bar-container">
+                <div class="urgency-text">{{ section.settings.urgency_text }}</div>
+                <div class="progress-bar-track">
+                  <div class="progress-bar-fill" style="width: {{ section.settings.urgency_progress }}%;"></div>
+                </div>
+              </div>
+            {% endif %}
+
+            <button type="submit" class="btn btn-primary btn-full" style="padding: 18px;" {% unless product.available %}disabled{% endunless %}>
+              {% if product.available %}
+                {{ 'general.product.add_to_cart' | t }}
+              {% else %}
+                {{ 'general.product.sold_out' | t }}
+              {% endif %}
+            </button>
+          {% endform %}
+
+          {% if section.settings.show_guarantee %}
+            <div class="guarantee-box">
+              {% render 'icon-guarantee' %}
+              <div>
+                <strong style="font-size: 0.9rem; display: block;">{{ section.settings.guarantee_title }}</strong>
+                <span style="font-size: 0.82rem; color: var(--color-text-muted);">{{ section.settings.guarantee_text }}</span>
+              </div>
+            </div>
+          {% endif %}
+
+        </div>
+      </div>
+    {% else %}
+      <!-- Fallback Demo Product Buy Box -->
+      <div class="pdp-grid">
+        <div class="pdp-gallery">
+          <div class="pdp-main-image">
+            {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+          </div>
+        </div>
+
+        <div class="pdp-info pdp-buy-box">
+          <div class="star-rating" style="margin-bottom: 10px;">
+            {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+            <span class="rating-text">{{ section.settings.rating_label }}</span>
+          </div>
+
+          <h2 class="pdp-title">Sample Premium Product</h2>
+
+          <div style="margin-bottom: 16px;">
+            <span class="price" style="font-size: 1.4rem;">$79.00</span>
+            <span class="compare-at-price" style="margin-left: 8px;">$99.00</span>
+          </div>
+
+          <div style="font-size: 0.95rem; color: var(--color-text-muted); margin-bottom: 24px;">
+            Experience premium craftsmanship engineered for everyday elegance and durability. Select a product in the Theme Editor to customize.
+          </div>
+
+          <button class="btn btn-primary btn-full" style="padding: 18px;">
+            {{ 'general.product.add_to_cart' | t }}
+          </button>
+
+          {% if section.settings.show_guarantee %}
+            <div class="guarantee-box" style="margin-top: 20px;">
+              {% render 'icon-guarantee' %}
+              <div>
+                <strong style="font-size: 0.9rem; display: block;">{{ section.settings.guarantee_title }}</strong>
+                <span style="font-size: 0.82rem; color: var(--color-text-muted);">{{ section.settings.guarantee_text }}</span>
+              </div>
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Product Showcase",
+  "settings": [
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "Section Heading",
+      "default": "Featured Spotlight Product"
+    },
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Select Featured Product"
+    },
+    {
+      "type": "text",
+      "id": "rating_label",
+      "label": "Rating Label",
+      "default": "Store Product Rating"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_urgency_bar",
+      "label": "Show Shipping Urgency Bar",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "urgency_text",
+      "label": "Urgency Message",
+      "default": "Shipping & Availability Notice"
+    },
+    {
+      "type": "range",
+      "id": "urgency_progress",
+      "min": 10,
+      "max": 95,
+      "step": 5,
+      "unit": "%",
+      "label": "Progress Bar Fill Percentage",
+      "default": 85
+    },
+    {
+      "type": "checkbox",
+      "id": "show_guarantee",
+      "label": "Show Guarantee Box",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "guarantee_title",
+      "label": "Guarantee Title",
+      "default": "Store Return Policy"
+    },
+    {
+      "type": "text",
+      "id": "guarantee_text",
+      "label": "Guarantee Description",
+      "default": "Review our store return and refund guidelines prior to purchase."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Product Showcase"
+    }
+  ]
+}
+{% endschema %}

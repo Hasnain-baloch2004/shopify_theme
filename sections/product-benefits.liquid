@@ -1,0 +1,112 @@
+<div style="padding: 80px 0; background-color: var(--color-bg);">
+  <div class="page-width">
+    <div class="pdp-grid" style="align-items: center;">
+      
+      <!-- Left Media Card -->
+      <div style="border-radius: var(--border-radius-card); overflow: hidden; background-color: var(--color-card-bg); aspect-ratio: 4/5;">
+        {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | image_url: width: 800 }}" alt="{{ section.settings.title | escape }}" style="width: 100%; height: 100%; object-fit: cover;">
+        {% else %}
+          {{ 'product-2' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% endif %}
+      </div>
+
+      <!-- Right Accordions -->
+      <div>
+        <h2 style="margin-bottom: 16px;">{{ section.settings.title }}</h2>
+        {% if section.settings.subtitle != blank %}
+          <p style="color: var(--color-text-muted); margin-bottom: 32px;">{{ section.settings.subtitle }}</p>
+        {% endif %}
+
+        <div class="accordion-group">
+          {% for block in section.blocks %}
+            <div class="accordion-item {% if forloop.first %}active{% endif %}" {{ block.shopify_attributes }}>
+              <button class="accordion-header">
+                <span>{{ block.settings.title }}</span>
+                {% render 'icon-chevron' %}
+              </button>
+              <div class="accordion-content">
+                <p>{{ block.settings.content }}</p>
+              </div>
+            </div>
+          {% endfor %}
+        </div>
+
+        {% if section.settings.cta_button_text != blank %}
+          <div style="margin-top: 36px;">
+            <a href="{{ section.settings.cta_button_link }}" class="btn btn-primary">
+              {{ section.settings.cta_button_text }}
+            </a>
+          </div>
+        {% endif %}
+      </div>
+
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product Benefits Accordion",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Engineered For Better Living"
+    },
+    {
+      "type": "textarea",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Thoughtfully crafted details designed to improve durability, usability, and style."
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Feature Side Image"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_text",
+      "label": "CTA Button Text",
+      "default": "SHOP NOW"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_link",
+      "label": "CTA Button Link"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit Accordion Item",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Benefit Title",
+          "default": "Premium Grade Materials"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "Benefit Description",
+          "default": "Sourced from high-grade materials to ensure maximum durability, long lifespan, and exceptional performance."
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Benefits Accordion",
+      "blocks": [
+        { "type": "benefit", "settings": { "title": "Premium Ergonomic Design", "content": "Designed with precision ergonomics for effortless everyday handling and user comfort." } },
+        { "type": "benefit", "settings": { "title": "Tested For Durability", "content": "Rigorously quality-tested to meet highest industry standards under real-world conditions." } },
+        { "type": "benefit", "settings": { "title": "Sleek Modern Finish", "content": "Clean minimalist aesthetics that blend seamlessly into any environment." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

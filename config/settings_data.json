@@ -1,0 +1,17 @@
+{
+  "current": {
+    "color_primary": "#c86b85",
+    "color_primary_hover": "#b25871",
+    "color_secondary": "#faecef",
+    "color_text": "#1a1a1a",
+    "color_heading": "#0d0d0d",
+    "color_bg": "#ffffff",
+    "color_card_bg": "#f9f6f0",
+    "color_border": "#ebe5df",
+    "color_sale_badge": "#d9534f",
+    "enable_cart_drawer": true,
+    "free_shipping_threshold": 50,
+    "free_shipping_text": "Add [amount] more to qualify for FREE Express Shipping!",
+    "free_shipping_unlocked_text": "Congratulations! You've unlocked FREE Express Shipping!"
+  }
+}

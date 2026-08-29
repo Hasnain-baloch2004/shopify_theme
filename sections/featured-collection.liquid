@@ -1,0 +1,89 @@
+{% assign collection = section.settings.collection %}
+{% if collection.title == blank %}{% assign collection = collections[section.settings.collection] %}{% endif %}
+
+<div style="padding: 80px 0; background-color: var(--color-bg);">
+  <div class="page-width">
+    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px;">
+      <div>
+        <h2>{{ section.settings.title | default: collection.title | default: "Best Sellers" }}</h2>
+        {% if section.settings.subtitle != blank %}
+          <p style="color: var(--color-text-muted); margin-top: 4px;">{{ section.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+
+      {% if collection != blank %}
+        <a href="{{ collection.url }}" style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary);">
+          VIEW ALL &rarr;
+        </a>
+      {% endif %}
+    </div>
+
+    {% if collection != blank and collection.products.size > 0 %}
+      <div class="product-grid">
+        {% for product in collection.products limit: section.settings.products_to_show %}
+          {% render 'product-card', product: product %}
+        {% endfor %}
+      </div>
+    {% else %}
+      <!-- Fallback Demo Card Placeholder Grid -->
+      <div class="product-grid">
+        {% for i in (1..section.settings.products_to_show) %}
+          {% assign placeholder_num = i | modulo: 6 %}
+          {% if placeholder_num == 0 %}{% assign placeholder_num = 6 %}{% endif %}
+          <div class="product-card">
+            <div class="product-card-image-wrapper">
+              {{ 'product-' | append: placeholder_num | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="product-card-content">
+              <h3 class="product-card-title">Sample Product Title</h3>
+              <div class="product-card-price-row">
+                <span class="price">$49.00</span>
+              </div>
+              <button class="btn btn-secondary btn-pill-small btn-full">View Options</button>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Featured Collection Grid",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop Best Sellers"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Explore our most popular and highly rated products."
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Select Collection"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "min": 4,
+      "max": 12,
+      "step": 4,
+      "label": "Products to Show",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "Featured Collection Grid"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,97 @@
+<div class="category-section">
+  <div class="page-width">
+    {% if section.settings.title != blank %}
+      <div class="text-center">
+        <h2 style="margin-bottom: 8px;">{{ section.settings.title }}</h2>
+        {% if section.settings.subtitle != blank %}
+          <p style="color: var(--color-text-muted);">{{ section.settings.subtitle }}</p>
+        {% endif %}
+      </div>
+    {% endif %}
+
+    <div class="category-grid">
+      {% for block in section.blocks %}
+        {% assign collection = block.settings.collection %}
+        {% if collection.title == blank %}{% assign collection = collections[block.settings.collection] %}{% endif %}
+        {% assign cat_title = block.settings.title | default: collection.title | default: "Featured Category" %}
+        {% assign cat_handle = cat_title | handleize %}
+        {% assign cat_url = collection.url %}
+        {% if cat_url == blank and cat_title != blank %}
+          {% assign cat_url = '/collections/' | append: cat_handle %}
+        {% endif %}
+        <a href="{% if cat_url != blank %}{{ cat_url }}{% else %}#{% endif %}" class="category-card" {{ block.shopify_attributes }}>
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ cat_title | escape }}" loading="lazy">
+          {% elsif collection.image != blank %}
+            <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy">
+          {% else %}
+            {% assign placeholder_num = forloop.index | modulo: 6 %}
+            {% if placeholder_num == 0 %}{% assign placeholder_num = 6 %}{% endif %}
+            {% assign placeholder_name = 'collection-' | append: placeholder_num %}
+            {{ placeholder_name | placeholder_svg_tag: 'placeholder-svg' }}
+          {% endif %}
+
+          <div class="category-card-overlay">
+            <h3 class="category-title">{{ cat_title }}</h3>
+            <span style="font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em;">Explore Category &rarr;</span>
+          </div>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Shop By Category",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Shop By Category"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subheading",
+      "default": "Browse through our curated collections designed for your lifestyle."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "Collection Block",
+      "settings": [
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "Select Shopify Collection"
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Custom Category Cover Image"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Custom Category Title"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shop By Category",
+      "blocks": [
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" },
+        { "type": "category" }
+      ]
+    }
+  ]
+}
+{% endschema %}
