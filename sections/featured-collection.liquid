@@ -1,23 +1,24 @@
 {% assign collection = section.settings.collection %}
 {% if collection.title == blank %}{% assign collection = collections[section.settings.collection] %}{% endif %}
 
-<div style="padding: 80px 0; background-color: var(--color-bg);">
+<div class="featured-collection-section" style="padding: 80px 0; background-color: {{ section.settings.bg_color | default: 'var(--color-bg)' }};">
   <div class="page-width">
-    <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 40px;">
-      <div>
-        <h2>{{ section.settings.title | default: collection.title | default: "Best Sellers" }}</h2>
+    
+    <!-- Section Header -->
+    <div class="featured-collection-header">
+      <div class="featured-collection-title-box">
+        <h2 class="featured-collection-title">{{ section.settings.title | default: collection.title | default: "Shop Best Sellers" }}</h2>
         {% if section.settings.subtitle != blank %}
-          <p style="color: var(--color-text-muted); margin-top: 4px;">{{ section.settings.subtitle }}</p>
+          <p class="featured-collection-subtitle">{{ section.settings.subtitle }}</p>
         {% endif %}
       </div>
 
-      {% if collection != blank %}
-        <a href="{{ collection.url }}" style="font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-primary);">
-          VIEW ALL &rarr;
-        </a>
-      {% endif %}
+      <a href="{{ collection.url | default: '/collections/all' }}" class="featured-collection-viewall">
+        View All Products &rarr;
+      </a>
     </div>
 
+    <!-- Real Products Grid -->
     {% if collection != blank and collection.products.size > 0 %}
       <div class="product-grid">
         {% for product in collection.products limit: section.settings.products_to_show %}
@@ -25,24 +26,115 @@
         {% endfor %}
       </div>
     {% else %}
-      <!-- Fallback Demo Card Placeholder Grid -->
+      <!-- Fallback Demo Product Cards Grid (When no collection is assigned yet) -->
       <div class="product-grid">
-        {% for i in (1..section.settings.products_to_show) %}
-          {% assign placeholder_num = i | modulo: 6 %}
-          {% if placeholder_num == 0 %}{% assign placeholder_num = 6 %}{% endif %}
-          <div class="product-card">
-            <div class="product-card-image-wrapper">
-              {{ 'product-' | append: placeholder_num | placeholder_svg_tag: 'placeholder-svg' }}
-            </div>
-            <div class="product-card-content">
-              <h3 class="product-card-title">Sample Product Title</h3>
-              <div class="product-card-price-row">
-                <span class="price">$49.00</span>
-              </div>
-              <button class="btn btn-secondary btn-pill-small btn-full">View Options</button>
+        
+        <!-- Demo Product 1 -->
+        <div class="product-card">
+          <div class="product-card-image-wrapper">
+            <span class="product-card-badge badge-sale">SAVE 20%</span>
+            <div class="demo-card-illustration" style="background-color: #f7f2ec;">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                <path d="M50 70C50 60 58 52 68 52H132C142 52 150 60 150 70V160H50V70Z" fill="#c3824c"/>
+                <path d="M50 75L100 110L150 75" stroke="#a66a36" stroke-width="3"/>
+                <path d="M80 52V35C80 25 88 17 98 17C108 17 116 25 116 35V52" stroke="#a66a36" stroke-width="5" fill="none"/>
+              </svg>
             </div>
           </div>
-        {% endfor %}
+          <div class="product-card-content">
+            <div class="product-card-vendor">AURA LUXURY</div>
+            <h3 class="product-card-title"><a href="/collections/all">Minimalist Leather Tote Bag</a></h3>
+            <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+              {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+              <span class="rating-text">4.9 (128)</span>
+            </div>
+            <div class="product-card-price-row">
+              <span class="price">$149.00</span>
+              <span class="compare-at-price">$185.00</span>
+            </div>
+            <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+          </div>
+        </div>
+
+        <!-- Demo Product 2 -->
+        <div class="product-card">
+          <div class="product-card-image-wrapper">
+            <span class="product-card-badge badge-bestseller">BESTSELLER</span>
+            <div class="demo-card-illustration" style="background-color: #f2f4f7;">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                <rect x="75" y="65" width="50" height="70" rx="14" fill="#1b1c1e"/>
+                <rect x="82" y="72" width="36" height="56" rx="8" fill="#30353c"/>
+                <rect x="91" y="25" width="18" height="40" rx="4" fill="#464b53"/>
+                <rect x="91" y="135" width="18" height="40" rx="4" fill="#464b53"/>
+              </svg>
+            </div>
+          </div>
+          <div class="product-card-content">
+            <div class="product-card-vendor">TECH ELEGANCE</div>
+            <h3 class="product-card-title"><a href="/collections/all">Classic Smartwatch Edition</a></h3>
+            <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+              {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+              <span class="rating-text">5.0 (94)</span>
+            </div>
+            <div class="product-card-price-row">
+              <span class="price">$229.00</span>
+            </div>
+            <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+          </div>
+        </div>
+
+        <!-- Demo Product 3 -->
+        <div class="product-card">
+          <div class="product-card-image-wrapper">
+            <span class="product-card-badge badge-sale">HOT ITEM</span>
+            <div class="demo-card-illustration" style="background-color: #fbf5ef;">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                <path d="M50 140C50 100 80 80 130 80C180 80 190 100 190 140H50Z" fill="#ffffff"/>
+                <path d="M50 140H190V152H50V140Z" fill="#e0d4c5"/>
+                <path d="M80 105L100 130M105 105L125 130" stroke="#cbbab0" stroke-width="4" stroke-linecap="round"/>
+              </svg>
+            </div>
+          </div>
+          <div class="product-card-content">
+            <div class="product-card-vendor">FOOTWEAR CO</div>
+            <h3 class="product-card-title"><a href="/collections/all">Premium Leather Sneakers</a></h3>
+            <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+              {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+              <span class="rating-text">4.8 (210)</span>
+            </div>
+            <div class="product-card-price-row">
+              <span class="price">$119.00</span>
+              <span class="compare-at-price">$140.00</span>
+            </div>
+            <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+          </div>
+        </div>
+
+        <!-- Demo Product 4 -->
+        <div class="product-card">
+          <div class="product-card-image-wrapper">
+            <span class="product-card-badge badge-bestseller">NEW ARRIVAL</span>
+            <div class="demo-card-illustration" style="background-color: #f9eff2;">
+              <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                <path d="M70 80C70 65 80 50 100 50C120 50 130 65 130 80C130 110 145 140 145 170H55C55 140 70 110 70 80Z" fill="#b05d76" opacity="0.8"/>
+                <rect x="90" y="25" width="20" height="25" fill="#e8c872"/>
+              </svg>
+            </div>
+          </div>
+          <div class="product-card-content">
+            <div class="product-card-vendor">PARFUM BOTANIQUE</div>
+            <h3 class="product-card-title"><a href="/collections/all">Velvet Rose Eau De Parfum</a></h3>
+            <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+              {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+              <span class="rating-text">4.9 (88)</span>
+            </div>
+            <div class="product-card-price-row">
+              <span class="price">$89.00</span>
+            </div>
+            <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+          </div>
+        </div>
+
       </div>
     {% endif %}
 
@@ -69,6 +161,12 @@
       "type": "collection",
       "id": "collection",
       "label": "Select Collection"
+    },
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "Background Color",
+      "default": "#ffffff"
     },
     {
       "type": "range",

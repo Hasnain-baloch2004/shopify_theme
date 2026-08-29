@@ -1,5 +1,5 @@
 {% comment %}
-  Renders product card with secondary image hover, badges, price, and view options button
+  Renders luxury product card with secondary image hover, badges, star ratings, price, and view options button
   Accepts:
   - product: {Object} Shopify Product object
 {% endcomment %}
@@ -8,12 +8,14 @@
   <div class="product-card-image-wrapper">
     <a href="{{ product.url }}">
       {% if product.featured_media %}
-        <img src="{{ product.featured_media | image_url: width: 600 }}" alt="{{ product.featured_media.alt | escape }}" loading="lazy" class="product-card-image-primary">
+        <img src="{{ product.featured_media | image_url: width: 600 }}" alt="{{ product.featured_media.alt | default: product.title | escape }}" loading="lazy" class="product-card-image-primary">
         {% if product.media[1] %}
-          <img src="{{ product.media[1] | image_url: width: 600 }}" alt="{{ product.media[1].alt | escape }}" loading="lazy" class="product-card-image-secondary">
+          <img src="{{ product.media[1] | image_url: width: 600 }}" alt="{{ product.media[1].alt | default: product.title | escape }}" loading="lazy" class="product-card-image-secondary">
         {% endif %}
       {% else %}
-        {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        <div class="demo-card-illustration" style="background-color: #f7f2ec;">
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
       {% endif %}
     </a>
 
@@ -21,7 +23,7 @@
       {% if product.compare_at_price > product.price %}
         <span class="badge badge-sale">Sale</span>
       {% endif %}
-      {% if product.tags contains 'bestseller' or product.tags contains 'best seller' %}
+      {% if product.tags contains 'bestseller' or product.tags contains 'best seller' or product.tags contains 'Best Seller' %}
         <span class="badge badge-bestseller">Bestseller</span>
       {% endif %}
     </div>
@@ -29,12 +31,17 @@
 
   <div class="product-card-content">
     {% if product.vendor != blank %}
-      <div style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-muted); margin-bottom: 4px;">{{ product.vendor }}</div>
+      <div class="product-card-vendor">{{ product.vendor | uppercase }}</div>
     {% endif %}
 
     <h3 class="product-card-title">
       <a href="{{ product.url }}">{{ product.title }}</a>
     </h3>
+
+    <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+      {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+      <span class="rating-text">4.9</span>
+    </div>
 
     <div class="product-card-price-row">
       {% render 'price', product: product %}
