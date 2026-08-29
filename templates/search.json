@@ -2,9 +2,17 @@
   "sections": {
     "main": {
       "type": "main-search"
+    },
+    "featured_collection": {
+      "type": "featured-collection"
+    },
+    "why_choose_us": {
+      "type": "why-choose-us"
     }
   },
   "order": [
-    "main"
+    "main",
+    "featured_collection",
+    "why_choose_us"
   ]
 }

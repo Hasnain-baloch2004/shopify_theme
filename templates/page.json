@@ -2,9 +2,17 @@
   "sections": {
     "main": {
       "type": "main-page"
+    },
+    "why_choose_us": {
+      "type": "why-choose-us"
+    },
+    "customer_reviews": {
+      "type": "customer-reviews"
     }
   },
   "order": [
-    "main"
+    "main",
+    "why_choose_us",
+    "customer_reviews"
   ]
 }
