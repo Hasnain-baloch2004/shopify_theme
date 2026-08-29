@@ -1404,16 +1404,237 @@ button {
 }
 
 /* 16. Mobile & Responsive Styles */
+/* 16. Mobile & Responsive Styles */
 @media (max-width: 1024px) {
   .header-nav { display: none !important; }
   .mobile-menu-toggle { display: flex !important; }
   .stats-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .category-grid { grid-template-columns: repeat(2, 1fr); }
-  .product-grid { grid-template-columns: repeat(2, 1fr); }
   .pdp-grid { grid-template-columns: 1fr; gap: 36px; }
 }
 
 @media (max-width: 768px) {
+  /* Header & Navigation Fixes */
+  .header-nav { display: none !important; }
+  .mobile-menu-toggle { display: flex !important; }
+
+  .site-header .header-inner {
+    height: 60px;
+    padding: 0 10px;
+    gap: 8px;
+  }
+
+  .header-logo-wrapper {
+    flex: 1 1 auto;
+    min-width: 0;
+    text-align: center;
+    overflow: hidden;
+  }
+
+  .header-logo {
+    font-size: clamp(0.95rem, 4.2vw, 1.25rem) !important;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 100%;
+    line-height: 1.2;
+  }
+
+  .header-logo img {
+    max-height: 28px !important;
+    width: auto;
+  }
+
+  /* Hero Section V2 Mobile Optimization */
+  .hero-section-v2 {
+    padding: 36px 0 28px;
+  }
+
+  .hero-grid-v2 {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    text-align: center;
+  }
+
+  .hero-content-col {
+    align-items: center;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* Elevated Soft Card Container when Background Image is Present */
+  .hero-section-v2.has-bg-image .hero-content-col {
+    background-color: rgba(246, 240, 230, 0.94);
+    border-radius: var(--border-radius-card);
+    padding: 24px 16px;
+    margin: 0 auto;
+    max-width: 95%;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+  }
+
+  .hero-rating-badge {
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 14px;
+    width: 100%;
+  }
+
+  .hero-rating-badge .rating-text {
+    white-space: nowrap;
+    font-size: 0.85rem;
+  }
+
+  .hero-heading-v2 {
+    font-size: clamp(1.8rem, 7vw, 2.5rem);
+    line-height: 1.18;
+    margin-bottom: 14px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .hero-sparkle-icon {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 4px;
+    transform: translateY(-2px);
+  }
+
+  .hero-sparkle-icon svg {
+    width: 22px;
+    height: 22px;
+  }
+
+  .hero-description-v2 {
+    font-size: 0.98rem;
+    line-height: 1.45;
+    margin: 0 auto 24px;
+    max-width: 340px;
+    text-align: center;
+  }
+
+  .hero-btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero-pill-btn {
+    width: 100%;
+    max-width: 260px;
+    padding: 14px 24px;
+    font-size: 0.88rem;
+  }
+
+  .hero-demo-visual {
+    display: none !important;
+  }
+
+  /* Product Grid Mobile 2-Column Rules */
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .product-card-content {
+    padding: 12px 10px !important;
+  }
+
+  .product-card-vendor {
+    font-size: 0.65rem !important;
+    margin-bottom: 4px !important;
+  }
+
+  .product-card-title {
+    font-size: 0.88rem !important;
+    line-height: 1.3 !important;
+    margin-bottom: 6px !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .price {
+    font-size: 0.95rem !important;
+  }
+
+  .compare-at-price {
+    font-size: 0.8rem !important;
+  }
+
+  .product-card .btn-pill-small {
+    padding: 8px 12px !important;
+    font-size: 0.75rem !important;
+  }
+
+  /* Shop By Category Mobile 2-Column Rules */
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .category-card {
+    aspect-ratio: 1 / 1 !important;
+    border-radius: var(--border-radius-card) !important;
+  }
+
+  .category-card-overlay {
+    padding: 12px !important;
+  }
+
+  .category-title {
+    font-size: 0.92rem !important;
+    margin-bottom: 2px !important;
+  }
+
+  /* Why Choose Us Mobile 2x2 Grid Rules */
+  .why-choose-us-section {
+    padding: 40px 0 !important;
+  }
+
+  .why-choose-us-header {
+    margin-bottom: 24px !important;
+  }
+
+  .why-choose-us-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 12px !important;
+  }
+
+  .why-choose-us-card {
+    padding: 18px 10px !important;
+    background-color: #ffffff !important;
+    border: 1px solid #e8e8e8 !important;
+    border-radius: var(--border-radius-card) !important;
+  }
+
+  .why-choose-us-icon-wrapper {
+    width: 44px !important;
+    height: 44px !important;
+    margin-bottom: 10px !important;
+    background-color: #f7eff2 !important;
+    color: #b05d76 !important;
+  }
+
+  .why-choose-us-icon-wrapper svg {
+    width: 20px !important;
+    height: 20px !important;
+  }
+
+  .why-choose-us-card-title {
+    font-size: 0.92rem !important;
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .why-choose-us-card-text {
+    font-size: 0.78rem !important;
+    line-height: 1.35 !important;
+    color: #666666 !important;
+  }
+
+  /* Footer Accordion & Layout Mobile Rules */
   .site-footer {
     padding: 40px 0 20px;
   }
@@ -1478,187 +1699,6 @@ button {
     padding-top: 16px;
   }
 
-  /* Hero Section V2 Mobile Optimization */
-  .hero-section-v2 {
-    padding: 48px 0 36px;
-  }
-
-  .hero-grid-v2 {
-    grid-template-columns: 1fr;
-    gap: 20px;
-    text-align: center;
-  }
-
-  .hero-content-col {
-    align-items: center;
-    text-align: center;
-    width: 100%;
-  }
-
-  .hero-rating-badge {
-    flex-wrap: nowrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 16px;
-    width: 100%;
-  }
-
-  .hero-rating-badge .rating-text {
-    white-space: nowrap;
-    font-size: 0.88rem;
-  }
-
-  .hero-heading-v2 {
-    font-size: clamp(2rem, 7.5vw, 2.75rem);
-    line-height: 1.18;
-    margin-bottom: 16px;
-    text-align: center;
-    width: 100%;
-  }
-
-  .hero-sparkle-icon {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 4px;
-    transform: translateY(-2px);
-  }
-
-  .hero-sparkle-icon svg {
-    width: 24px;
-    height: 24px;
-  }
-
-  .hero-description-v2 {
-    font-size: 1.02rem;
-    line-height: 1.5;
-    margin: 0 auto 28px;
-    max-width: 360px;
-    text-align: center;
-  }
-
-  .hero-btn-wrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .hero-pill-btn {
-    width: 100%;
-    max-width: 280px;
-    padding: 15px 28px;
-    font-size: 0.9rem;
-  }
-
-  /* Hide default SVG demo visual on mobile so mobile displays clean text layout */
-  .hero-demo-visual {
-    display: none !important;
-  }
-
-  .hero-visual-col {
-    width: 100%;
-  }
-
-  /* Header Mobile Logo & Layout Fixes */
-  .site-header .header-inner {
-    height: 60px;
-    padding: 0 10px;
-    gap: 8px;
-  }
-
-  .header-logo-wrapper {
-    flex: 1 1 auto;
-    min-width: 0;
-    text-align: center;
-    overflow: hidden;
-  }
-
-  .header-logo {
-    font-size: clamp(0.95rem, 4.2vw, 1.25rem) !important;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: inline-block;
-    max-width: 100%;
-    line-height: 1.2;
-  }
-
-  .header-logo img {
-    max-height: 28px !important;
-    width: auto;
-  }
-
-  .hero-image-wrapper {
-    margin-top: 16px;
-    width: 100%;
-    border-radius: var(--border-radius-card);
-    overflow: hidden;
-  }
-}
-
-@media (max-width: 640px) {
-  .stats-grid { grid-template-columns: 1fr 1fr; }
-  .product-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-  .product-card-content {
-    padding: 12px 10px !important;
-  }
-  .product-card-vendor {
-    font-size: 0.65rem !important;
-    margin-bottom: 4px !important;
-  }
-  .product-card-title {
-    font-size: 0.88rem !important;
-    line-height: 1.3 !important;
-    margin-bottom: 6px !important;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-  .price {
-    font-size: 0.95rem !important;
-  }
-  .compare-at-price {
-    font-size: 0.8rem !important;
-  }
-  .product-card .btn-pill-small {
-    padding: 8px 12px !important;
-    font-size: 0.75rem !important;
-  }
   .pdp-gallery { flex-direction: column-reverse; }
   .pdp-thumbnails { flex-direction: row; width: 100%; }
-
-  /* Why Choose Us Mobile 2x2 Grid */
-  .why-choose-us-section {
-    padding: 48px 0 !important;
-  }
-  .why-choose-us-header {
-    margin-bottom: 28px !important;
-  }
-  .why-choose-us-grid {
-    grid-template-columns: repeat(2, 1fr) !important;
-    gap: 12px !important;
-  }
-  .why-choose-us-card {
-    padding: 20px 12px !important;
-  }
-  .why-choose-us-icon-wrapper {
-    width: 46px !important;
-    height: 46px !important;
-    margin-bottom: 12px !important;
-  }
-  .why-choose-us-icon-wrapper svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
-  .why-choose-us-card-title {
-    font-size: 0.95rem !important;
-    margin-bottom: 6px !important;
-  }
-  .why-choose-us-card-text {
-    font-size: 0.8rem !important;
-    line-height: 1.4 !important;
-  }
 }
