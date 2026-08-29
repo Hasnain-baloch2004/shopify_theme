@@ -37,7 +37,7 @@
         "sparkle_color": "#b05d76",
         "subheading": "Quality products. Great prices. Shop with confidence.",
         "button_text": "SHOP NOW",
-        "button_link": ""
+        "button_link": "shopify://collections/all"
       }
     },
     "featured_collection_kJAkxF": {
@@ -98,12 +98,97 @@
         "title": "Shop By Category",
         "subtitle": "Browse through our curated collections designed for your lifestyle."
       }
+    },
+    "customer_reviews_kPCr4a": {
+      "type": "customer-reviews",
+      "blocks": {
+        "review_bkMfMp": {
+          "type": "review",
+          "settings": {
+            "heading": "Exceptional Quality",
+            "review_text": "The craftsmanship and attention to detail are amazing. Truly exceeded my expectations!",
+            "author_name": "Sarah M.",
+            "verified_buyer": true
+          }
+        },
+        "review_A8MerP": {
+          "type": "review",
+          "settings": {
+            "heading": "Fast Delivery & Packaging",
+            "review_text": "Arrived within 2 days in beautiful eco-friendly packaging. Will definitely order again.",
+            "author_name": "David K.",
+            "verified_buyer": true
+          }
+        },
+        "review_AFPgeT": {
+          "type": "review",
+          "settings": {
+            "heading": "Highly Recommended",
+            "review_text": "Five stars! Great customer support and superior product build.",
+            "author_name": "Elena R.",
+            "verified_buyer": true
+          }
+        }
+      },
+      "block_order": [
+        "review_bkMfMp",
+        "review_A8MerP",
+        "review_AFPgeT"
+      ],
+      "name": "Customer Reviews",
+      "settings": {
+        "title": "Customer Feedback",
+        "subtitle": "Read real experiences from verified store customers.",
+        "bg_color": "#ffffff"
+      }
+    },
+    "faq_accordions_kkUTXX": {
+      "type": "faq-accordions",
+      "blocks": {
+        "faq_znEgYe": {
+          "type": "faq",
+          "settings": {
+            "question": "How long does delivery take?",
+            "answer": "Standard shipping takes 3-7 business days, while express shipping arrives within 2-4 business days."
+          }
+        },
+        "faq_7cC4jA": {
+          "type": "faq",
+          "settings": {
+            "question": "What is your return policy?",
+            "answer": "We offer a 30-day money-back guarantee on all unused items in original packaging."
+          }
+        },
+        "faq_RgaKAw": {
+          "type": "faq",
+          "settings": {
+            "question": "How can I track my order?",
+            "answer": "Once shipped, you will receive an email with a live tracking number and link."
+          }
+        }
+      },
+      "block_order": [
+        "faq_znEgYe",
+        "faq_7cC4jA",
+        "faq_RgaKAw"
+      ],
+      "name": "FAQ Accordions",
+      "settings": {
+        "title": "Frequently Asked Questions",
+        "subtitle": "Find answers to common questions about orders, shipping, and returns.",
+        "support_card_title": "Need Additional Help?",
+        "support_card_text": "Our support team is available 24/7 to assist you with order inquiries and product questions.",
+        "support_card_btn_text": "CONTACT SUPPORT",
+        "support_card_btn_link": ""
+      }
     }
   },
   "order": [
     "main",
     "hero_MVyhz9",
     "featured_collection_kJAkxF",
-    "shop_by_category_wmUWGJ"
+    "shop_by_category_wmUWGJ",
+    "customer_reviews_kPCr4a",
+    "faq_accordions_kkUTXX"
   ]
 }
