@@ -11,9 +11,9 @@
 
     <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
       {% for block in section.blocks %}
-        <div style="border-radius: var(--border-radius-card); overflow: hidden; aspect-ratio: 1; background-color: var(--color-bg); position: relative; group: hover;" {{ block.shopify_attributes }}>
+        <div style="border-radius: var(--border-radius-card); overflow: hidden; aspect-ratio: 1; background-color: var(--color-bg); position: relative;" {{ block.shopify_attributes }}>
           {% if block.settings.image != blank %}
-            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="Community" style="width: 100%; height: 100%; object-fit: cover;">
+            <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ block.settings.image.alt | default: 'Community post' | escape }}" style="width: 100%; height: 100%; object-fit: cover;">
           {% else %}
             {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
           {% endif %}

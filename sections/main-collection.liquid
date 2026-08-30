@@ -24,8 +24,9 @@
           </div>
         {% endif %}
       {% else %}
-        <div class="text-center" style="padding: 60px 0;">
-          <p style="color: var(--color-text-muted);">No products found in this collection.</p>
+        <div class="text-center" style="padding: 60px 24px; background-color: var(--color-card-bg); border-radius: var(--border-radius-card); border: 1px solid var(--color-border); max-width: 600px; margin: 0 auto;">
+          <p style="color: var(--color-text-muted); font-size: 1.1rem; margin-bottom: 20px;">No products found in this collection.</p>
+          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-pill-small">Browse All Products</a>
         </div>
       {% endif %}
     {% endpaginate %}

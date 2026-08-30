@@ -488,7 +488,10 @@ button {
 .stats-grid {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  divide-x: 1px solid var(--color-border);
+}
+
+.stat-item + .stat-item {
+  border-left: 1px solid var(--color-border);
 }
 
 .stat-item {
@@ -530,7 +533,6 @@ button {
   overflow: hidden;
   aspect-ratio: 4/5;
   background-color: var(--color-card-bg);
-  group: hover;
 }
 
 .category-card img {
@@ -1626,9 +1628,7 @@ button {
     border-radius: var(--border-radius-card);
     overflow: hidden;
   }
-}
 
-@media (max-width: 768px) {
   .stats-grid { grid-template-columns: 1fr 1fr; }
   .product-grid {
     grid-template-columns: repeat(2, 1fr) !important;

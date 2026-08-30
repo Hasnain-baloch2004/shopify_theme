@@ -16,11 +16,11 @@
         {% assign cat_title = block.settings.title | default: collection.title | default: "Featured Category" %}
         {% assign cat_handle = cat_title | handleize %}
         {% assign cat_url = collection.url %}
-        {% if cat_url == blank and cat_title != blank %}
-          {% assign cat_url = '/collections/' | append: cat_handle %}
+        {% if cat_url == blank and collections[cat_handle] != blank %}
+          {% assign cat_url = collections[cat_handle].url %}
         {% endif %}
         {% if cat_url == blank or cat_url == '#' %}
-          {% assign cat_url = '/collections/all' %}
+          {% assign cat_url = routes.all_products_collection_url %}
         {% endif %}
         <a href="{{ cat_url }}" class="category-card" {{ block.shopify_attributes }}>
           {% if block.settings.image != blank %}

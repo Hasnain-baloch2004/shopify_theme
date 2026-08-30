@@ -10,7 +10,7 @@
       <label for="bundle-1-{{ product.id }}">Single Item (Qty: 1)</label>
     </div>
     <div class="bundle-prices">
-      <span class="bundle-total-price" style="font-weight: 700; font-size: 1.05rem;">{{ product.price | money }}</span>
+      <span class="bundle-total-price" data-bundle-multiplier="1" style="font-weight: 700; font-size: 1.05rem;">{{ product.price | money }}</span>
     </div>
   </div>
 
@@ -21,7 +21,7 @@
       <label for="bundle-2-{{ product.id }}">Double Pack (Qty: 2)</label>
     </div>
     <div class="bundle-prices">
-      <span class="bundle-total-price" style="font-weight: 700; font-size: 1.05rem;">
+      <span class="bundle-total-price" data-bundle-multiplier="2" style="font-weight: 700; font-size: 1.05rem;">
         {% assign double_price = product.price | times: 2 %}
         {{ double_price | money }}
       </span>
@@ -35,7 +35,7 @@
       <label for="bundle-3-{{ product.id }}">Triple Pack (Qty: 3)</label>
     </div>
     <div class="bundle-prices">
-      <span class="bundle-total-price" style="font-weight: 700; font-size: 1.05rem;">
+      <span class="bundle-total-price" data-bundle-multiplier="3" style="font-weight: 700; font-size: 1.05rem;">
         {% assign triple_price = product.price | times: 3 %}
         {{ triple_price | money }}
       </span>

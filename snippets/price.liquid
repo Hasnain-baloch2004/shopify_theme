@@ -9,9 +9,10 @@
     <span class="price">{{ product.price | money }}</span>
   {% endif %}
 
+  <span class="compare-at-price" style="{% unless product.compare_at_price > product.price %}display: none;{% endunless %}">{{ product.compare_at_price | money }}</span>
+  {% assign discount = 0 %}
   {% if product.compare_at_price > product.price %}
-    <span class="compare-at-price">{{ product.compare_at_price | money }}</span>
     {% assign discount = product.compare_at_price | minus: product.price | times: 100.0 | divided_by: product.compare_at_price | round %}
-    <span style="font-size: 0.78rem; font-weight: 700; color: var(--color-primary);">Save {{ discount }}%</span>
   {% endif %}
+  <span class="price-discount-badge" style="font-size: 0.78rem; font-weight: 700; color: var(--color-primary); {% unless product.compare_at_price > product.price %}display: none;{% endunless %}">Save {{ discount }}%</span>
 </div>

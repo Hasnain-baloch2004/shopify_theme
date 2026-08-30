@@ -1,5 +1,10 @@
 {% assign collection = section.settings.collection %}
 {% if collection.title == blank %}{% assign collection = collections[section.settings.collection] %}{% endif %}
+{% if collection == blank or collection.products.size == 0 %}
+  {% if collections.all.products.size > 0 %}
+    {% assign collection = collections.all %}
+  {% endif %}
+{% endif %}
 
 <div class="featured-collection-section" style="padding: 80px 0; background-color: {{ section.settings.bg_color | default: 'var(--color-bg)' }};">
   <div class="page-width">

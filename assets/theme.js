@@ -15,7 +15,22 @@ document.addEventListener('DOMContentLoaded', () => {
   initHeaderSearch();
   initStickyAddToCartSubmit();
   initFooterAccordions();
+  initCartPage();
 });
+
+/* Helper: Safe Route Generation */
+function getRoute(endpoint) {
+  const root = (window.Shopify && window.Shopify.routes && window.Shopify.routes.root) || '/';
+  return (root.endsWith('/') ? root : root + '/') + endpoint.replace(/^\//, '');
+}
+
+/* Helper: Safe Theme Settings Access */
+function getThemeSetting(key, fallback) {
+  if (window.Shopify && window.Shopify.theme_settings && window.Shopify.theme_settings[key] !== undefined) {
+    return window.Shopify.theme_settings[key];
+  }
+  return fallback;
+}
 
 /* 1. Ajax Cart Drawer Handling */
 function initCartDrawer() {
@@ -69,6 +84,11 @@ function initCartDrawer() {
   // Ajax Add to Cart Forms
   document.querySelectorAll('form[data-product-form], form[action*="/cart/add"]').forEach(form => {
     form.addEventListener('submit', async (e) => {
+      const enableDrawer = getThemeSetting('enable_cart_drawer', true);
+      if (!enableDrawer) {
+        return; // Allow native form submission if drawer is explicitly disabled
+      }
+
       e.preventDefault();
       const submitBtn = form.querySelector('[type="submit"]');
       if (submitBtn) {
@@ -78,8 +98,9 @@ function initCartDrawer() {
 
       try {
         const formData = new FormData(form);
-        const response = await fetch(window.Shopify.routes.root + 'cart/add.js', {
+        const response = await fetch(getRoute('cart/add.js'), {
           method: 'POST',
+          headers: { 'Accept': 'application/json' },
           body: formData
         });
 
@@ -104,7 +125,9 @@ function initCartDrawer() {
 // Fetch Cart Data & Update Drawer UI
 async function fetchCart() {
   try {
-    const response = await fetch(window.Shopify.routes.root + 'cart.js');
+    const response = await fetch(getRoute('cart.js'), {
+      headers: { 'Accept': 'application/json' }
+    });
     const cart = await response.json();
     updateCartDrawerUI(cart);
   } catch (error) {
@@ -119,15 +142,26 @@ function updateCartDrawerUI(cart) {
   const shippingBox = document.querySelector('[data-shipping-progress-box]');
   const shippingContainer = document.querySelector('[data-free-shipping-threshold]');
 
-  // Update Free Shipping Goal
-  if (shippingBox && shippingContainer) {
-    const thresholdDollars = parseFloat(shippingContainer.getAttribute('data-free-shipping-threshold')) || 50;
+  // Update Free Shipping Goal with Dynamic Merchant Settings
+  if (shippingBox) {
+    const thresholdDollars = parseFloat(
+      shippingContainer?.getAttribute('data-free-shipping-threshold') ||
+      getThemeSetting('free_shipping_threshold', 50)
+    );
     const thresholdCents = thresholdDollars * 100;
+    const unlockedMsg = getThemeSetting('free_shipping_unlocked_text', "Congratulations! You've unlocked FREE Express Shipping!");
+    const progressTemplate = getThemeSetting('free_shipping_text', "Add [amount] more to qualify for FREE Express Shipping!");
+
     if (cart.total_price >= thresholdCents) {
-      shippingBox.innerHTML = `<div style="font-size: 0.85rem; font-weight: 700; color: var(--color-primary); text-align: center;">🎉 Congratulations! You've unlocked FREE Express Shipping!</div>`;
+      shippingBox.innerHTML = `<div style="font-size: 0.85rem; font-weight: 700; color: var(--color-primary); text-align: center;">🎉 ${escapeHtml(unlockedMsg)}</div>`;
     } else {
       const remaining = thresholdCents - cart.total_price;
-      shippingBox.innerHTML = `<div style="font-size: 0.85rem; font-weight: 600; text-align: center; color: var(--color-heading);">Add <strong style="color: var(--color-primary);">${formatMoney(remaining)}</strong> more for FREE Express Shipping!</div>`;
+      const formattedRemaining = formatMoney(remaining);
+      let message = progressTemplate.replace('[amount]', `<strong style="color: var(--color-primary);">${formattedRemaining}</strong>`);
+      if (!message.includes(formattedRemaining)) {
+        message = `Add <strong style="color: var(--color-primary);">${formattedRemaining}</strong> more for FREE Express Shipping!`;
+      }
+      shippingBox.innerHTML = `<div style="font-size: 0.85rem; font-weight: 600; text-align: center; color: var(--color-heading);">${message}</div>`;
     }
   }
 
@@ -161,7 +195,7 @@ function updateCartDrawerUI(cart) {
     return;
   }
 
-  // Render Items using data attributes (No unsafe inline JS!)
+  // Render Items
   let itemsHTML = '<div class="cart-items-list" style="display: flex; flex-direction: column; gap: 20px;">';
   cart.items.forEach(item => {
     itemsHTML += `
@@ -191,9 +225,12 @@ function updateCartDrawerUI(cart) {
 
 async function updateCartItemQuantity(key, quantity) {
   try {
-    const response = await fetch(window.Shopify.routes.root + 'cart/change.js', {
+    const response = await fetch(getRoute('cart/change.js'), {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
       body: JSON.stringify({ id: String(key), quantity: quantity })
     });
     const cart = await response.json();
@@ -237,24 +274,55 @@ function initVariantSelectors() {
         if (displayLabel) displayLabel.textContent = select.value;
       });
 
+      const stickyPrice = document.querySelector('[data-sticky-price]');
+      const stickyBtn = document.querySelector('[data-sticky-btn]');
+      const stickyImg = document.querySelector('[data-sticky-image]');
+      const mainImg = document.querySelector('[data-main-image]');
+
       if (matchedVariant) {
         variantInput.value = matchedVariant.id;
         
-        // Update Price Display
-        const container = form.closest('.pdp-info') || form.closest('.featured-product-section');
+        // Update Price & Discount Display
+        const container = form.closest('.pdp-info') || form.closest('.featured-product-section') || form.closest('.pdp-buy-box');
         if (container) {
           const priceElem = container.querySelector('.price');
           if (priceElem) priceElem.textContent = formatMoney(matchedVariant.price);
 
           const compareElem = container.querySelector('.compare-at-price');
-          if (compareElem) {
-            if (matchedVariant.compare_at_price > matchedVariant.price) {
+          const discountBadge = container.querySelector('.price-discount-badge');
+
+          if (matchedVariant.compare_at_price > matchedVariant.price) {
+            if (compareElem) {
               compareElem.textContent = formatMoney(matchedVariant.compare_at_price);
               compareElem.style.display = 'inline';
-            } else {
-              compareElem.style.display = 'none';
             }
+            if (discountBadge) {
+              const discount = Math.round(((matchedVariant.compare_at_price - matchedVariant.price) / matchedVariant.compare_at_price) * 100);
+              discountBadge.textContent = `Save ${discount}%`;
+              discountBadge.style.display = 'inline';
+            }
+          } else {
+            if (compareElem) compareElem.style.display = 'none';
+            if (discountBadge) discountBadge.style.display = 'none';
           }
+
+          // Recalculate Bundle Prices based on active variant price
+          const bundleSpans = container.querySelectorAll('.bundle-total-price[data-bundle-multiplier]');
+          bundleSpans.forEach(span => {
+            const multiplier = parseInt(span.getAttribute('data-bundle-multiplier') || '1', 10);
+            span.textContent = formatMoney(matchedVariant.price * multiplier);
+          });
+        }
+
+        // Update Sticky Bar State
+        if (stickyPrice) {
+          stickyPrice.textContent = formatMoney(matchedVariant.price);
+        }
+
+        // Update Variant Image if available
+        if (matchedVariant.featured_image && matchedVariant.featured_image.src) {
+          if (mainImg) mainImg.src = matchedVariant.featured_image.src;
+          if (stickyImg) stickyImg.src = matchedVariant.featured_image.src;
         }
 
         // Update Submit Button State
@@ -265,6 +333,15 @@ function initVariantSelectors() {
           } else {
             submitBtn.disabled = true;
             submitBtn.textContent = 'Sold Out';
+          }
+        }
+        if (stickyBtn) {
+          if (matchedVariant.available) {
+            stickyBtn.disabled = false;
+            stickyBtn.textContent = 'Add to Cart';
+          } else {
+            stickyBtn.disabled = true;
+            stickyBtn.textContent = 'Sold Out';
           }
         }
 
@@ -278,6 +355,10 @@ function initVariantSelectors() {
         if (submitBtn) {
           submitBtn.disabled = true;
           submitBtn.textContent = 'Unavailable';
+        }
+        if (stickyBtn) {
+          stickyBtn.disabled = true;
+          stickyBtn.textContent = 'Unavailable';
         }
       }
     }
@@ -323,7 +404,7 @@ function initProductGallery() {
   });
 }
 
-/* 5. Quantity Control Steppers */
+/* 5. Quantity Control Steppers with Bundle Sync */
 function initQuantityControls() {
   document.querySelectorAll('[data-quantity-wrapper]').forEach(wrapper => {
     const input = wrapper.querySelector('input[type="number"]');
@@ -332,36 +413,69 @@ function initQuantityControls() {
 
     if (!input) return;
 
+    function syncBundleCards(qty) {
+      const form = wrapper.closest('form') || document.querySelector('form[data-product-form]');
+      if (!form) return;
+      const cards = form.querySelectorAll('.bundle-card');
+      cards.forEach(card => {
+        const cQty = parseInt(card.getAttribute('data-bundle-qty') || '0', 10);
+        const isMatch = (cQty === qty);
+        card.classList.toggle('active', isMatch);
+        const radio = card.querySelector('input[type="radio"]');
+        if (radio) radio.checked = isMatch;
+      });
+    }
+
     if (minusBtn) {
       minusBtn.addEventListener('click', () => {
-        let val = parseInt(input.value) || 1;
-        if (val > 1) input.value = val - 1;
+        let val = parseInt(input.value, 10) || 1;
+        if (val > 1) {
+          input.value = val - 1;
+          syncBundleCards(val - 1);
+        }
       });
     }
 
     if (plusBtn) {
       plusBtn.addEventListener('click', () => {
-        let val = parseInt(input.value) || 1;
+        let val = parseInt(input.value, 10) || 1;
         input.value = val + 1;
+        syncBundleCards(val + 1);
       });
     }
+
+    input.addEventListener('change', () => {
+      let val = parseInt(input.value, 10) || 1;
+      if (val < 1) val = 1;
+      input.value = val;
+      syncBundleCards(val);
+    });
   });
 }
 
-/* 6. Bundle Cards Selector */
+/* 6. Bundle Cards Selector with Two-Way Synchronization */
 function initBundleSelectors() {
   document.querySelectorAll('.bundle-card').forEach(card => {
     card.addEventListener('click', () => {
       const group = card.closest('.bundle-selector-container');
       if (!group) return;
 
-      group.querySelectorAll('.bundle-card').forEach(c => c.classList.remove('active'));
-      card.classList.add('active');
+      group.querySelectorAll('.bundle-card').forEach(c => {
+        c.classList.remove('active');
+        const r = c.querySelector('input[type="radio"]');
+        if (r) r.checked = false;
+      });
 
-      const qtyInput = card.closest('form')?.querySelector('input[name="quantity"]');
+      card.classList.add('active');
+      const radio = card.querySelector('input[type="radio"]');
+      if (radio) radio.checked = true;
+
       const targetQty = card.getAttribute('data-bundle-qty');
-      if (qtyInput && targetQty) {
-        qtyInput.value = targetQty;
+      const form = card.closest('form') || document.querySelector('form[data-product-form]');
+      if (form && targetQty) {
+        form.querySelectorAll('input[name="quantity"]').forEach(input => {
+          input.value = targetQty;
+        });
       }
     });
   });
@@ -407,21 +521,34 @@ function initMobileMenu() {
   }
 }
 
-/* 8. Sticky Add to Cart Bar on Scroll */
+/* 8. Sticky Add to Cart Bar on Scroll with IntersectionObserver */
 function initStickyAddToCart() {
-  const stickyBar = document.querySelector('.sticky-add-to-cart-bar');
+  const stickyBar = document.querySelector('[data-sticky-bar]') || document.querySelector('.sticky-add-to-cart-bar');
   const mainBuyBox = document.querySelector('.pdp-buy-box');
 
   if (!stickyBar || !mainBuyBox) return;
 
-  window.addEventListener('scroll', () => {
-    const boxRect = mainBuyBox.getBoundingClientRect();
-    if (boxRect.bottom < 0) {
-      stickyBar.classList.add('visible');
-    } else {
-      stickyBar.classList.remove('visible');
-    }
-  });
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting && entry.boundingClientRect.top < 0) {
+          stickyBar.classList.add('visible');
+        } else {
+          stickyBar.classList.remove('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+    observer.observe(mainBuyBox);
+  } else {
+    window.addEventListener('scroll', () => {
+      const boxRect = mainBuyBox.getBoundingClientRect();
+      if (boxRect.bottom < 0) {
+        stickyBar.classList.add('visible');
+      } else {
+        stickyBar.classList.remove('visible');
+      }
+    }, { passive: true });
+  }
 }
 
 /* 9. Header Search Bar Slide-Down Toggle */
@@ -478,18 +605,49 @@ function initFooterAccordions() {
   });
 }
 
-/* Helpers */
+/* 12. Standalone Cart Page Reactivity */
+function initCartPage() {
+  const cartForm = document.getElementById('cart-form');
+  if (!cartForm) return;
+
+  cartForm.querySelectorAll('input[name="updates[]"]').forEach(input => {
+    input.addEventListener('change', () => {
+      cartForm.submit();
+    });
+  });
+}
+
+/* Robust Money Formatter */
 function formatMoney(cents) {
   if (typeof cents !== 'number') cents = parseFloat(cents) || 0;
   const dollars = (cents / 100).toFixed(2);
-  if (window.Shopify && window.Shopify.money_format) {
-    let format = window.Shopify.money_format;
-    if (format.includes('{{amount}}')) return format.replace('{{amount}}', dollars);
-    if (format.includes('{{ amount }}')) return format.replace('{{ amount }}', dollars);
+  const format = (window.Shopify && window.Shopify.money_format) || '$' + '{{amount}}';
+
+  if (format.indexOf('{{amount_no_decimals}}') !== -1) {
+    return format.replace('{{amount_no_decimals}}', Math.round(cents / 100).toString());
+  }
+  if (format.indexOf('{{ amount_no_decimals }}') !== -1) {
+    return format.replace('{{ amount_no_decimals }}', Math.round(cents / 100).toString());
+  }
+  if (format.indexOf('{{amount_with_comma_separator}}') !== -1) {
+    return format.replace('{{amount_with_comma_separator}}', dollars.replace('.', ','));
+  }
+  if (format.indexOf('{{ amount_with_comma_separator }}') !== -1) {
+    return format.replace('{{ amount_with_comma_separator }}', dollars.replace('.', ','));
+  }
+  if (format.indexOf('{{amount}}') !== -1) {
+    return format.replace('{{amount}}', dollars);
+  }
+  if (format.indexOf('{{ amount }}') !== -1) {
+    return format.replace('{{ amount }}', dollars);
   }
   return '$' + dollars;
 }
 
 function escapeHtml(str) {
-  return String(str || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
 }

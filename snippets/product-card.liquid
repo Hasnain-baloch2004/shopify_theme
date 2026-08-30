@@ -51,9 +51,9 @@
 
     <a href="{{ card_url }}" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">
       {% if product.has_only_default_variant %}
-        Add to Cart
+        {{ 'general.product.view_options' | t | default: 'View Product' }}
       {% else %}
-        View Options
+        {{ 'general.product.view_options' | t | default: 'View Options' }}
       {% endif %}
     </a>
   </div>

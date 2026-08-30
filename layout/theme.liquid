@@ -18,10 +18,15 @@
       {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
     </title>
 
+    <!-- Script for JS detection -->
+    <script>document.documentElement.className = document.documentElement.className.replace('no-js', 'js');</script>
+
     <!-- Typography & Color Settings Engine -->
     {% style %}
       {{ settings.font_heading | font_face: font_display: 'swap' }}
+      {{ settings.font_heading | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
       {{ settings.font_body | font_face: font_display: 'swap' }}
+      {{ settings.font_body | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
 
       :root {
         --color-primary: {{ settings.color_primary }};
@@ -38,6 +43,19 @@
         --font-body: {{ settings.font_body.family }}, {{ settings.font_body.fallback_families }};
       }
     {% endstyle %}
+
+    <!-- Global Shopify Settings & Routes Engine -->
+    <script>
+      window.Shopify = window.Shopify || {};
+      window.Shopify.routes = window.Shopify.routes || { root: '{{ routes.root_url }}' };
+      window.Shopify.money_format = {{ shop.money_format | json }};
+      window.Shopify.theme_settings = {
+        enable_cart_drawer: {{ settings.enable_cart_drawer | json }},
+        free_shipping_threshold: {{ settings.free_shipping_threshold | default: 50 | json }},
+        free_shipping_text: {{ settings.free_shipping_text | json }},
+        free_shipping_unlocked_text: {{ settings.free_shipping_unlocked_text | json }}
+      };
+    </script>
 
     <!-- CSS & JS Assets -->
     {{ 'theme.css' | asset_url | stylesheet_tag }}

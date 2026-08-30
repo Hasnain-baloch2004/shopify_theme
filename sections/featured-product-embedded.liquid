@@ -1,5 +1,8 @@
 {% assign product = section.settings.product %}
 {% if product.title == blank %}{% assign product = all_products[section.settings.product] %}{% endif %}
+{% if product.title == blank and collections.all.products.size > 0 %}
+  {% assign product = collections.all.products.first %}
+{% endif %}
 
 <div class="featured-product-section" style="background-color: var(--color-card-bg);">
   <div class="page-width">
