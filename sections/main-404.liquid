@@ -6,14 +6,14 @@
   {% endif %}
   
   <h2 style="margin-bottom: 16px;">
-    {{ section.settings.title | default: 'templates.404.title' | t }}
+    {{ section.settings.title | default: 'Page Not Found' }}
   </h2>
 
   <p style="color: var(--color-text-muted); max-width: 480px; margin: 0 auto 32px;">
-    {{ section.settings.subtext | default: 'templates.404.subtext' | t }}
+    {{ section.settings.subtext | default: 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.' }}
   </p>
 
-  {% assign btn_label = section.settings.button_label | default: 'templates.404.button_label' | t %}
+  {% assign btn_label = section.settings.button_label | default: 'Back to Home' %}
   {% if btn_label != blank %}
     <a href="{{ section.settings.button_link | default: routes.root_url }}" class="btn btn-primary">
       {{ btn_label }}
