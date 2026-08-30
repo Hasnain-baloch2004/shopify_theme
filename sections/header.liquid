@@ -30,14 +30,18 @@
         {% if main_menu.links != blank %}
           {% for link in main_menu.links %}
             {% assign link_url = link.url %}
-            {% if link.type == 'collection_link' and link.object == blank %}
-              {% assign link_url = routes.all_products_collection_url %}
-            {% endif %}
-            {% if link.type == 'product_link' and link.object == blank %}
-              {% assign link_url = routes.all_products_collection_url %}
-            {% endif %}
-            {% if link.type == 'page_link' and link.object == blank %}
-              {% assign link_url = routes.root_url %}
+            {% if link.url contains '/collections/' %}
+              {% assign col_part = link.url | split: '/collections/' | last %}
+              {% assign col_handle = col_part | split: '/' | first | split: '?' | first %}
+              {% if col_handle != 'all' and col_handle != '' and collections[col_handle] == blank %}
+                {% assign link_url = routes.all_products_collection_url %}
+              {% endif %}
+            {% elsif link.url contains '/products/' %}
+              {% assign prod_part = link.url | split: '/products/' | last %}
+              {% assign prod_handle = prod_part | split: '/' | first | split: '?' | first %}
+              {% if prod_handle != '' and all_products[prod_handle] == blank and collections.all.products.first != blank %}
+                {% assign link_url = collections.all.products.first.url %}
+              {% endif %}
             {% endif %}
             {% if forloop.first and section.settings.highlight_first_menu_item %}
               <a href="{{ link_url }}" class="nav-link nav-pill-btn">{{ link.title }}</a>
@@ -111,14 +115,18 @@
     {% if main_menu.links != blank %}
       {% for link in main_menu.links %}
         {% assign link_url = link.url %}
-        {% if link.type == 'collection_link' and link.object == blank %}
-          {% assign link_url = routes.all_products_collection_url %}
-        {% endif %}
-        {% if link.type == 'product_link' and link.object == blank %}
-          {% assign link_url = routes.all_products_collection_url %}
-        {% endif %}
-        {% if link.type == 'page_link' and link.object == blank %}
-          {% assign link_url = routes.root_url %}
+        {% if link.url contains '/collections/' %}
+          {% assign col_part = link.url | split: '/collections/' | last %}
+          {% assign col_handle = col_part | split: '/' | first | split: '?' | first %}
+          {% if col_handle != 'all' and col_handle != '' and collections[col_handle] == blank %}
+            {% assign link_url = routes.all_products_collection_url %}
+          {% endif %}
+        {% elsif link.url contains '/products/' %}
+          {% assign prod_part = link.url | split: '/products/' | last %}
+          {% assign prod_handle = prod_part | split: '/' | first | split: '?' | first %}
+          {% if prod_handle != '' and all_products[prod_handle] == blank and collections.all.products.first != blank %}
+            {% assign link_url = collections.all.products.first.url %}
+          {% endif %}
         {% endif %}
         <a href="{{ link_url }}" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">
           {{ link.title }}

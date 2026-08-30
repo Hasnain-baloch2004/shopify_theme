@@ -7,10 +7,12 @@
       }
     },
     "why_choose_us": {
-      "type": "why-choose-us"
+      "type": "why-choose-us",
+      "settings": {}
     },
     "promotional_banner": {
-      "type": "promotional-banner"
+      "type": "promotional-banner",
+      "settings": {}
     }
   },
   "order": [
