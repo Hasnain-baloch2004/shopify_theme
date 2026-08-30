@@ -1,0 +1,37 @@
+<div style="padding: 60px 0; background-color: var(--color-bg);">
+  <div class="page-width">
+    <div class="text-center" style="margin-bottom: 48px;">
+      <h1 style="margin-bottom: 12px;">All Collections</h1>
+      <p style="color: var(--color-text-muted);">Explore all curated product collections in our store.</p>
+    </div>
+
+    <div class="category-grid">
+      {% for collection in collections %}
+        {% unless collection.handle == 'frontpage' %}
+          <a href="{{ collection.url }}" class="category-card">
+            {% if collection.image != blank %}
+              <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy">
+            {% elsif collection.products.first.featured_media != blank %}
+              <img src="{{ collection.products.first.featured_media | image_url: width: 600 }}" alt="{{ collection.title | escape }}" loading="lazy">
+            {% else %}
+              <div class="demo-card-illustration" style="background-color: var(--color-card-bg); display: flex; align-items: center; justify-content: center; height: 100%;">
+                {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg' }}
+              </div>
+            {% endif %}
+            <div class="category-card-overlay">
+              <span class="category-card-title">{{ collection.title }}</span>
+              <span class="category-card-count">{{ collection.all_products_count }} Products &rarr;</span>
+            </div>
+          </a>
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "All Collections Grid",
+  "settings": []
+}
+{% endschema %}

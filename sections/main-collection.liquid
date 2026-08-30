@@ -2,7 +2,7 @@
   <div class="page-width">
     
     <div class="text-center" style="margin-bottom: 48px;">
-      <h1 style="margin-bottom: 12px;">{{ collection.title }}</h1>
+      <h1 style="margin-bottom: 12px;">{{ collection.title | default: "All Products" }}</h1>
       {% if collection.description != blank %}
         <div style="max-width: 600px; margin: 0 auto; color: var(--color-text-muted);">
           {{ collection.description }}
@@ -23,10 +23,115 @@
             {{ paginate | default_pagination }}
           </div>
         {% endif %}
+      {% elsif collections.all.products.size > 0 %}
+        <div class="product-grid">
+          {% for product in collections.all.products limit: section.settings.products_per_page %}
+            {% render 'product-card', product: product %}
+          {% endfor %}
+        </div>
       {% else %}
-        <div class="text-center" style="padding: 60px 24px; background-color: var(--color-card-bg); border-radius: var(--border-radius-card); border: 1px solid var(--color-border); max-width: 600px; margin: 0 auto;">
-          <p style="color: var(--color-text-muted); font-size: 1.1rem; margin-bottom: 20px;">No products found in this collection.</p>
-          <a href="{{ routes.all_products_collection_url }}" class="btn btn-primary btn-pill-small">Browse All Products</a>
+        <!-- Demo Products Grid for Store Preview -->
+        <div class="product-grid">
+          <!-- Demo 1 -->
+          <div class="product-card">
+            <div class="product-card-image-wrapper">
+              <span class="product-card-badge badge-sale">SAVE 20%</span>
+              <div class="demo-card-illustration" style="background-color: #f7f2ec;">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                  <path d="M50 70C50 60 58 52 68 52H132C142 52 150 60 150 70V160H50V70Z" fill="#c3824c"/>
+                  <path d="M50 75L100 110L150 75" stroke="#a66a36" stroke-width="3"/>
+                  <path d="M80 52V35C80 25 88 17 98 17C108 17 116 25 116 35V52" stroke="#a66a36" stroke-width="5" fill="none"/>
+                </svg>
+              </div>
+            </div>
+            <div class="product-card-content">
+              <div class="product-card-vendor">AURA LUXURY</div>
+              <h3 class="product-card-title"><a href="/collections/all">Minimalist Leather Tote Bag</a></h3>
+              <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+                {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+                <span class="rating-text">4.9 (128)</span>
+              </div>
+              <div class="product-card-price-row">
+                <span class="price">$149.00</span>
+                <span class="compare-at-price">$185.00</span>
+              </div>
+              <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+            </div>
+          </div>
+          <!-- Demo 2 -->
+          <div class="product-card">
+            <div class="product-card-image-wrapper">
+              <span class="product-card-badge badge-bestseller">BESTSELLER</span>
+              <div class="demo-card-illustration" style="background-color: #eef3f7;">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                  <circle cx="100" cy="100" r="45" fill="#2b4353"/>
+                  <rect x="85" y="25" width="30" height="35" rx="6" fill="#1c2c37"/>
+                  <rect x="85" y="140" width="30" height="35" rx="6" fill="#1c2c37"/>
+                  <circle cx="100" cy="100" r="35" fill="#ffffff" opacity="0.15"/>
+                </svg>
+              </div>
+            </div>
+            <div class="product-card-content">
+              <div class="product-card-vendor">AURA TECH</div>
+              <h3 class="product-card-title"><a href="/collections/all">Classic Smartwatch Edition</a></h3>
+              <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+                {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+                <span class="rating-text">5.0 (256)</span>
+              </div>
+              <div class="product-card-price-row">
+                <span class="price">$229.00</span>
+              </div>
+              <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+            </div>
+          </div>
+          <!-- Demo 3 -->
+          <div class="product-card">
+            <div class="product-card-image-wrapper">
+              <div class="demo-card-illustration" style="background-color: #f7f0eb;">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                  <path d="M40 120C40 110 50 100 70 100H130C150 100 160 110 160 120V145H40V120Z" fill="#a45236"/>
+                  <rect x="35" y="145" width="130" height="15" rx="4" fill="#5c2918"/>
+                </svg>
+              </div>
+            </div>
+            <div class="product-card-content">
+              <div class="product-card-vendor">AURA FOOTWEAR</div>
+              <h3 class="product-card-title"><a href="/collections/all">Premium Leather Sneakers</a></h3>
+              <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+                {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+                <span class="rating-text">4.8 (94)</span>
+              </div>
+              <div class="product-card-price-row">
+                <span class="price">$119.00</span>
+                <span class="compare-at-price">$145.00</span>
+              </div>
+              <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+            </div>
+          </div>
+          <!-- Demo 4 -->
+          <div class="product-card">
+            <div class="product-card-image-wrapper">
+              <div class="demo-card-illustration" style="background-color: #f5edf1;">
+                <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 65%; height: 65%;">
+                  <rect x="75" y="70" width="50" height="80" rx="10" fill="#9b4d66"/>
+                  <rect x="88" y="45" width="24" height="25" rx="4" fill="#c37d94"/>
+                  <rect x="94" y="32" width="12" height="13" rx="2" fill="#e8b9c8"/>
+                </svg>
+              </div>
+            </div>
+            <div class="product-card-content">
+              <div class="product-card-vendor">AURA BEAUTY</div>
+              <h3 class="product-card-title"><a href="/collections/all">Velvet Rose Eau De Parfum</a></h3>
+              <div class="star-rating" style="font-size: 0.8rem; margin-bottom: 6px;">
+                {% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}{% render 'icon-star' %}
+                <span class="rating-text">4.9 (310)</span>
+              </div>
+              <div class="product-card-price-row">
+                <span class="price">$89.00</span>
+              </div>
+              <a href="/collections/all" class="btn btn-secondary btn-pill-small btn-full" style="margin-top: auto;">View Options</a>
+            </div>
+          </div>
         </div>
       {% endif %}
     {% endpaginate %}
