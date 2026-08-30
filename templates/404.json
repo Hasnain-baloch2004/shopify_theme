@@ -12,7 +12,15 @@
     "main": {
       "type": "main-404",
       "disabled": true,
-      "settings": {}
+      "settings": {
+        "code_text": "404",
+        "title": "Page Not Found",
+        "subtext": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.",
+        "button_label": "Back to Home",
+        "button_link": "",
+        "padding_top": 120,
+        "padding_bottom": 120
+      }
     },
     "hero_MVyhz9": {
       "type": "hero",
