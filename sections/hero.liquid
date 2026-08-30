@@ -47,8 +47,10 @@
         {% endif %}
 
         {% if section.settings.button_text != blank %}
+          {% assign hero_btn_url = section.settings.button_link %}
+          {% if hero_btn_url == blank %}{% assign hero_btn_url = '/collections/all' %}{% endif %}
           <div class="hero-btn-wrapper">
-            <a href="{{ section.settings.button_link | default: '/collections/all' }}" class="btn hero-pill-btn">
+            <a href="{{ hero_btn_url }}" class="btn hero-pill-btn">
               {{ section.settings.button_text }}
             </a>
           </div>

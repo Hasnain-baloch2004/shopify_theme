@@ -3,11 +3,17 @@
     "hero": {
       "type": "hero",
       "settings": {
+        "image": "shopify://shop_images/ChatGPT_Image_Aug_30_2026_03_07_34_AM.png",
+        "overlay_color": "rgba(246, 240, 230, 0.82)",
+        "bg_color": "#f6f0e6",
+        "text_color": "#1a1a1a",
         "show_rating": true,
-        "rating_text": "Rated 4.9/5 by JovarkusSalesCo Customers",
-        "heading": "Premium Beauty, Food & Fragrance Essentials.",
-        "subheading": "Discover curated products engineered for elegance, taste, and enduring satisfaction at JovarkusSalesCo.",
-        "button_text": "EXPLORE COLLECTIONS",
+        "rating_text": "Rated by Store Customers",
+        "heading": "Discover Your New Favorites",
+        "show_sparkles": true,
+        "sparkle_color": "#b05d76",
+        "subheading": "Quality products. Great prices. Shop with confidence.",
+        "button_text": "SHOP NOW",
         "button_link": "/collections/all"
       }
     },

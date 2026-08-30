@@ -19,7 +19,10 @@
         {% if cat_url == blank and cat_title != blank %}
           {% assign cat_url = '/collections/' | append: cat_handle %}
         {% endif %}
-        <a href="{% if cat_url != blank %}{{ cat_url }}{% else %}#{% endif %}" class="category-card" {{ block.shopify_attributes }}>
+        {% if cat_url == blank or cat_url == '#' %}
+          {% assign cat_url = '/collections/all' %}
+        {% endif %}
+        <a href="{{ cat_url }}" class="category-card" {{ block.shopify_attributes }}>
           {% if block.settings.image != blank %}
             <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ cat_title | escape }}" loading="lazy">
           {% elsif collection.image != blank %}
