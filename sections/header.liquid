@@ -29,10 +29,20 @@
         {% endif %}
         {% if main_menu.links != blank %}
           {% for link in main_menu.links %}
+            {% assign link_url = link.url %}
+            {% if link.type == 'collection_link' and link.object == blank %}
+              {% assign link_url = routes.all_products_collection_url %}
+            {% endif %}
+            {% if link.type == 'product_link' and link.object == blank %}
+              {% assign link_url = routes.all_products_collection_url %}
+            {% endif %}
+            {% if link.type == 'page_link' and link.object == blank %}
+              {% assign link_url = routes.root_url %}
+            {% endif %}
             {% if forloop.first and section.settings.highlight_first_menu_item %}
-              <a href="{{ link.url }}" class="nav-link nav-pill-btn">{{ link.title }}</a>
+              <a href="{{ link_url }}" class="nav-link nav-pill-btn">{{ link.title }}</a>
             {% else %}
-              <a href="{{ link.url }}" class="nav-link">{{ link.title }}</a>
+              <a href="{{ link_url }}" class="nav-link">{{ link.title }}</a>
             {% endif %}
           {% endfor %}
         {% else %}
@@ -100,7 +110,17 @@
   <nav style="display: flex; flex-direction: column;">
     {% if main_menu.links != blank %}
       {% for link in main_menu.links %}
-        <a href="{{ link.url }}" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">
+        {% assign link_url = link.url %}
+        {% if link.type == 'collection_link' and link.object == blank %}
+          {% assign link_url = routes.all_products_collection_url %}
+        {% endif %}
+        {% if link.type == 'product_link' and link.object == blank %}
+          {% assign link_url = routes.all_products_collection_url %}
+        {% endif %}
+        {% if link.type == 'page_link' and link.object == blank %}
+          {% assign link_url = routes.root_url %}
+        {% endif %}
+        <a href="{{ link_url }}" style="font-family: var(--font-heading); font-size: 1.1rem; font-weight: 600; text-decoration: none; color: #1a1a1a !important; padding: 14px 0; border-bottom: 1px solid #f5f5f5; display: block;">
           {{ link.title }}
         </a>
       {% endfor %}
