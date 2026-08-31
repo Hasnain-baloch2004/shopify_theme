@@ -1,4 +1,5 @@
 {
+  "name": "Default product",
   "sections": {
     "main": {
       "type": "main-product",
@@ -7,7 +8,9 @@
         "urgency_text": "In High Demand • Ships within 24 business hours",
         "urgency_fill": 85,
         "show_dynamic_checkout": true,
-        "show_guarantee": true
+        "show_guarantee": true,
+        "guarantee_title": "Store Return Policy",
+        "guarantee_desc": "Review our store return and refund guidelines prior to purchase."
       }
     },
     "why_choose_us": {
