@@ -12,17 +12,13 @@
     <div class="category-grid">
       {% for block in section.blocks %}
         {% assign collection = block.settings.collection %}
-        {% if collection.title == blank %}{% assign collection = collections[block.settings.collection] %}{% endif %}
         {% assign cat_title = block.settings.title | default: collection.title | default: "Featured Category" %}
-        {% assign cat_handle = cat_title | handleize %}
         {% assign cat_url = collection.url %}
-        {% if cat_url == blank or collection.title == blank %}
-          {% if collections[cat_handle].title != blank %}
-            {% assign cat_url = collections[cat_handle].url %}
-          {% else %}
-            {% assign cat_url = routes.all_products_collection_url %}
-          {% endif %}
+        {% if cat_url == blank and block.settings.title != blank %}
+          {% assign fallback_handle = block.settings.title | handleize %}
+          {% assign cat_url = collections[fallback_handle].url %}
         {% endif %}
+        {% assign cat_url = cat_url | default: '#' %}
         <a href="{{ cat_url }}" class="category-card" {{ block.shopify_attributes }}>
           {% if block.settings.image != blank %}
             <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ cat_title | escape }}" loading="lazy">

@@ -77,10 +77,7 @@
           <ul class="footer-menu-list">
             {% if menu_1.links != blank %}
               {% for link in menu_1.links %}
-                {% assign f_url = link.url %}
-                {% if link.type == 'collection_link' and link.object == blank %}{% assign f_url = routes.all_products_collection_url %}{% endif %}
-                {% if link.type == 'page_link' and link.object == blank %}{% assign f_url = routes.root_url %}{% endif %}
-                <li><a href="{{ f_url }}">{{ link.title }}</a></li>
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {% endfor %}
             {% else %}
               <li><a href="{{ routes.all_products_collection_url }}">All Collections</a></li>
@@ -103,10 +100,7 @@
           <ul class="footer-menu-list">
             {% if menu_2.links != blank %}
               {% for link in menu_2.links %}
-                {% assign f_url = link.url %}
-                {% if link.type == 'collection_link' and link.object == blank %}{% assign f_url = routes.all_products_collection_url %}{% endif %}
-                {% if link.type == 'page_link' and link.object == blank %}{% assign f_url = routes.root_url %}{% endif %}
-                <li><a href="{{ f_url }}">{{ link.title }}</a></li>
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {% endfor %}
             {% else %}
               <li><a href="{{ routes.root_url }}">Contact Us</a></li>
@@ -129,10 +123,7 @@
           <ul class="footer-menu-list">
             {% if menu_3.links != blank %}
               {% for link in menu_3.links %}
-                {% assign f_url = link.url %}
-                {% if link.type == 'collection_link' and link.object == blank %}{% assign f_url = routes.all_products_collection_url %}{% endif %}
-                {% if link.type == 'page_link' and link.object == blank %}{% assign f_url = routes.root_url %}{% endif %}
-                <li><a href="{{ f_url }}">{{ link.title }}</a></li>
+                <li><a href="{{ link.url }}">{{ link.title }}</a></li>
               {% endfor %}
             {% else %}
               <li><a href="{{ routes.root_url }}">Our Brand Story</a></li>

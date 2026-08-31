@@ -4,7 +4,7 @@
   - product: {Object} Shopify Product object
 {% endcomment %}
 
-{% assign card_url = product.url | default: '/collections/all' %}
+{% assign card_url = product.url | default: '#' %}
 
 <div class="product-card">
   <div class="product-card-image-wrapper">
